@@ -32,31 +32,35 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 <div class="nexus-wrapper">
   <aside class="sidebar scroll-v">
     <div class="brand">Nexus AI</div>
-    <div id="cat-nav"><div class="nav-item active">All Systems <b id="stat-all">0</b></div></div>
+    <div id="cat-nav"><div class="nav-item active">Global Systems <b id="stat-all">0</b></div></div>
   </aside>
   <main class="scroll-v">
-    <input type="text" id="nexus-search" placeholder="Search 411+ Intelligence Systems...">
+    <input type="text" id="nexus-search" placeholder="Search across AI Index...">
     <div id="nexus-grid" class="grid"></div>
   </main>
   <aside class="sidebar scroll-v" style="border-left:1px solid var(--border); border-right:none;">
-    <div id="ins-view"><h2 id="det-name">Select an AI</h2><p id="det-comp" style="color:var(--accent);"></p></div>
+    <div id="ins-view">
+      <h2 id="det-name" style="margin:0;">Select Intelligence</h2>
+      <p id="det-comp" style="color:var(--accent); font-weight:bold;"></p>
+      <div id="det-desc" style="font-size:0.85rem; line-height:1.6; color:var(--muted); margin-top:20px;"></div>
+    </div>
   </aside>
 </div>
 
 <div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
 <div id="admin-modal" class="overlay">
   <div style="background:#0f172a; padding:30px; border-radius:20px; border:1px solid var(--accent); width:100%; max-width:600px;">
-    <h3>Nexus Stream Ingester</h3>
-    <textarea id="import-data" style="width:100%; height:250px; background:#020617; color:var(--accent); border:1px solid #1e293b; padding:10px; border-radius:10px; font-family:monospace; font-size:0.7rem;" placeholder="Paste 411 items here..."></textarea>
+    <h3>Nexus JSON Ingester</h3>
+    <p style="font-size:0.8rem; color:var(--muted);">Paste the AI JSON data here.</p>
+    <textarea id="import-data" style="width:100%; height:250px; background:#020617; color:var(--accent); border:1px solid #1e293b; padding:10px; border-radius:10px; font-family:monospace; font-size:0.7rem;"></textarea>
     <div style="margin-top:20px; display:flex; gap:10px;">
-      <button onclick="runNexusSync()" style="background:var(--accent); border:none; padding:12px 24px; border-radius:8px; font-weight:bold; cursor:pointer;">Sync 411 Items</button>
+      <button onclick="runNexusSync()" style="background:var(--accent); border:none; padding:12px 24px; border-radius:8px; font-weight:bold; cursor:pointer; color:#020617;">Sync JSON Items</button>
       <button onclick="toggleAdmin()" style="background:transparent; border:1px solid #1e293b; color:white; padding:12px 24px; border-radius:8px; cursor:pointer;">Close</button>
     </div>
   </div>
 </div>
 
 <script>
-// --- スクリーンショット(3417)の内容を反映 ---
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -72,49 +76,54 @@ const db = firebase.firestore();
 let nexusData = [];
 
 async function fetchData() {
-  try {
-    const snap = await db.collection("ai_tools").get();
-    nexusData = [];
-    snap.forEach(doc => nexusData.push({ id: doc.id, ...doc.data() }));
-    render();
-  } catch(e) { console.error("Database connection error: check Firestore Rules"); }
+  const snap = await db.collection("ai_tools").get();
+  nexusData = [];
+  snap.forEach(doc => nexusData.push({ id: doc.id, ...doc.data() }));
+  render();
 }
 fetchData();
 
 function render() {
   const search = document.getElementById("nexus-search").value.toLowerCase();
   const grid = document.getElementById("nexus-grid");
-  const filtered = nexusData.filter(it => it.name.toLowerCase().includes(search));
+  const filtered = nexusData.filter(it => it.name.toLowerCase().includes(search) || (it.provider && it.provider.toLowerCase().includes(search)));
   document.getElementById("stat-all").innerText = nexusData.length;
   grid.innerHTML = filtered.map(it => `
     <div class="card" onclick="inspect('${it.id}')">
-      <div style="font-size:0.6rem; color:var(--accent); font-weight:800;">${it.cat}</div>
+      <div style="font-size:0.6rem; color:var(--accent); font-weight:800;">${it.flag || '🌐'} ${it.country || ''}</div>
       <div class="c-name">${it.name}</div>
-      <div class="c-comp">${it.company}</div>
+      <div class="c-comp">${it.provider || it.company || ''}</div>
     </div>
   `).join("");
 }
 
 function runNexusSync() {
   const raw = document.getElementById("import-data").value;
-  const lines = raw.split('\n');
-  let cCat = "General";
-  const items = [];
-  lines.forEach(l => {
-    const cat = l.match(/^(.+?)（\d+件）/); if(cat) { cCat = cat[1]; return; }
-    const ai = l.match(/^(.+?) — (.+)$/);
-    if(ai) items.push({ id: ai[1].toLowerCase().replace(/\s+/g,'_').replace(/[^\w]/g,''), name: ai[1].trim(), company: ai[2].trim(), cat: cCat, clicks: 0 });
-  });
-  if(items.length === 0) return alert("No valid AI items found. Check your text format.");
-  const batch = db.batch();
-  items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
-  batch.commit().then(() => { alert("Sync Complete!"); location.reload(); });
+  try {
+    const items = JSON.parse(raw);
+    if (!Array.isArray(items)) throw new Error("Data must be an array");
+    
+    const batch = db.batch();
+    items.forEach(it => {
+      const docRef = db.collection("ai_tools").doc(it.id);
+      batch.set(docRef, it);
+    });
+    
+    batch.commit().then(() => {
+      alert("Sync Complete! " + items.length + " items added.");
+      location.reload();
+    });
+  } catch(e) {
+    alert("Invalid JSON format. Please check the data.");
+    console.error(e);
+  }
 }
 
 function inspect(id) {
   const it = nexusData.find(x => x.id === id);
   document.getElementById("det-name").innerText = it.name;
-  document.getElementById("det-comp").innerText = it.company;
+  document.getElementById("det-comp").innerText = it.provider || it.company || '';
+  document.getElementById("det-desc").innerText = it.short_desc || '';
 }
 
 window.toggleAdmin = () => document.getElementById("admin-modal").classList.toggle("active");
