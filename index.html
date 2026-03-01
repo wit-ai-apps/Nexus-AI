@@ -1,47 +1,274 @@
-[
-  {
-    "id": "nexus_apollo_io",
-    "name": "Apollo.io",
-    "provider": "Apollo.io",
-    "country": "USA",
-    "flag": "us",
-    "favicon_domain": "apollo.io",
-    "rating": 4.9,
-    "pricing": [{"plan": "Free", "price": "0", "limit": "Basic search"}, {"plan": "Professional", "price": "49", "limit": "Full data export"}],
-    "platform": ["Web", "Chrome"],
-    "short_desc": "The most comprehensive B2B lead database and AI engagement suite.",
-    "long_desc": "Apollo.io (2026) is the definitive platform for sales intelligence. It combines a database of 275M+ contacts with AI workflows to automate prospecting and outreach. Gemini Honest Take: It's the only sales tool you need for lead generation. The AI writing feature for personalized emails is a massive time-saver for SDRs.",
-    "cons": "The sheer amount of data can occasionally lead to outdated contact information, though its 2026 verification engine is highly improved.",
-    "url": "https://www.apollo.io/"
-  },
-  {
-    "id": "arize_phoenix_eval",
-    "name": "Arize Phoenix",
-    "provider": "Arize AI",
-    "country": "USA",
-    "flag": "us",
-    "favicon_domain": "arize.com",
-    "rating": 4.8,
-    "pricing": [{"plan": "Open Source", "price": "0", "limit": "Local hosting"}],
-    "platform": ["Python", "Docker", "Web"],
-    "short_desc": "Top-tier AI observability and evaluation (Open Source).",
-    "long_desc": "Arize Phoenix is a 2026 favorite for 'LLM Evaluation.' It allows developers to visualize embeddings, trace agentic workflows, and detect hallucinations in RAG systems before they reach production.",
-    "cons": "The user interface is highly technical, designed for data scientists rather than general business users.",
-    "url": "https://arize.com/phoenix/"
-  },
-  {
-    "id": "nexus_arthur_bench",
-    "name": "Arthur Bench",
-    "provider": "Arthur",
-    "country": "USA",
-    "flag": "us",
-    "favicon_domain": "arthur.ai",
-    "rating": 4.7,
-    "pricing": [{"plan": "Open Source", "price": "0", "limit": "Personal use"}],
-    "platform": ["Python", "Web"],
-    "short_desc": "Open-source framework for evaluating and comparing LLMs.",
-    "long_desc": "Arthur Bench is a 2026 tool designed to help developers choose the best LLM for their specific needs by providing a standardized set of evaluation metrics and benchmarks.",
-    "cons": "Setting up custom benchmarking suites requires a deep understanding of evaluation metrics and model performance parameters.",
-    "url": "https://www.arthur.ai/bench"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS AI | Global Professional Intelligence Index</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wit-ai-apps/Nexus-AI/main/favicon.png">
+<style>
+:root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); --new-red: #ef4444; }
+* { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
+
+.header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 110px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
+.ad-space { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
+
+/* 判定を確実にするため、pointer-eventsとz-indexを調整 */
+.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; z-index: 1001; padding: 10px 20px; }
+.brand-row { display: flex; align-items: center; gap: 15px; pointer-events: none; }
+.logo-mark { width: 42px; height: 42px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
+.brand-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; pointer-events: none; }
+.brand-ver { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; pointer-events: none; }
+
+#toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.3s ease-out forwards; }
+@keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 110px); }
+.col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
+.col::-webkit-scrollbar { display: none; }
+
+.index-counter { text-align: center; margin-bottom: 25px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 100px; border: 1px solid var(--border); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--muted); }
+.index-counter span { color: var(--accent); margin-left: 5px; }
+.main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 320px; position: relative; }
+.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+.stars { font-size: 0.9rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stars::before { content: "★★★★★"; }
+.rate-num { font-size: 0.75rem; color: var(--muted); font-weight: 800; margin-left: 4px; }
+.c-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; }
+.c-info { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.flag-img { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; border: 0.5px solid var(--border); }
+.c-desc { font-size: 0.9rem; color: #d1d5db; line-height: 1.5; margin-bottom: 15px; flex-grow: 1; }
+.plat-box { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; padding-top: 10px; border-top: 1px solid var(--border); }
+.plat-tag { font-size: 0.6rem; background: rgba(255,255,255,0.05); color: var(--muted); padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+.price-bar { border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 800; align-items: center; }
+.details-btn { font-size: 0.65rem; color: var(--accent); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 100px; font-weight: bold; }
+
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+.overlay.active { display: flex; }
+.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; opacity: 0.5; }
+.pass-field { width: 100%; padding: 18px; background: black; border: 1px solid var(--border); color: white; border-radius: 12px; text-align: center; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 10px; }
+
+.new-badge { color: var(--new-red); font-weight: 900; font-size: 0.65rem; margin-right: 6px; border: 1px solid var(--new-red); padding: 1px 4px; border-radius: 4px; }
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<header class="header-grid">
+  <div class="ad-space">SPONSORS WANTED</div>
+  <div class="brand-center" id="admin-trigger">
+    <div class="brand-row">
+        <div class="logo-mark">N</div>
+        <div class="brand-title">NEXUS AI <span style="margin: 0 10px; opacity: 0.3; font-weight: 200;">|</span> The Definitive Global Directory for Generative Intelligence</div>
+    </div>
+    <div class="brand-ver">MODEL VERSION 119.1.0 PRO REVIEW</div>
+  </div>
+  <div class="ad-space">SPONSORS WANTED</div>
+</header>
+
+<div class="layout">
+  <aside class="col" style="border-right:1px solid var(--border);">
+    <div id="clock-box" style="margin-bottom:30px;">
+        <div id="clock-t" style="font-size:1.2rem; color:var(--accent); font-weight:bold;">00:00:00</div>
+        <div id="clock-z" style="font-size:0.75rem; color:var(--muted);">Detecting...</div>
+    </div>
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;">Live AI News</h4>
+    <div id="news-feed">Syncing global feeds...</div>
+  </aside>
+
+  <main class="col">
+    <div class="index-counter">TOTAL AI INDEX: <span id="total-count">0</span> SYSTEMS</div>
+    <div id="nexus-grid" class="main-grid"></div>
+  </main>
+
+  <aside class="col" style="border-left:1px solid var(--border);">
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;">New Arrivals</h4>
+    <div id="arrival-feed"></div>
+  </aside>
+</div>
+
+<div id="detail-modal" class="overlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <div id="d-content"></div>
+    <a id="d-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:18px; border-radius:15px; font-weight:bold; text-decoration:none; margin-top:30px; font-size:1.1rem; text-transform:uppercase;">Visit Provider Website</a>
+  </div>
+</div>
+
+<div id="admin-auth" class="overlay">
+  <div class="modal" style="width:400px; text-align:center;">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <h3>System Access</h3>
+    <input type="password" id="sys-pass" class="pass-field">
+    <button onclick="verifyKey()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">Unlock System</button>
+  </div>
+</div>
+
+<div id="admin-panel" class="overlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <h2>System Synchronization</h2>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:20px;">
+      <button onclick="switchTab('data')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Ingester</button>
+      <button onclick="switchTab('anal')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Site Analytics</button>
+      <button onclick="switchTab('edit')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Manager</button>
+    </div>
+    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:350px;"></div>
+  </div>
+</div>
+
+<script>
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
+  authDomain: "nexus-ai-55d14.firebaseapp.com",
+  projectId: "nexus-ai-55d14",
+  storageBucket: "nexus-ai-55d14.firebasestorage.app",
+  messagingSenderId: "28279756535",
+  appId: "1:28279756535:web:2ae124e9fe28736a7725f2",
+  measurementId: "G-TYNP47D66Y"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let nexusData = [];
+
+// Admin Access Logic (確実に反応させるため明示的にID取得)
+let taps = 0;
+const trigger = document.getElementById('admin-trigger');
+trigger.addEventListener('click', () => {
+  taps++;
+  console.log(`Admin Tap: ${taps}`); // コンソールで確認可能
+  if(taps >= 5) {
+    openOverlay('admin-auth');
+    taps = 0;
   }
-]
+});
+
+function verifyKey() {
+  if(document.getElementById('sys-pass').value === "55533557") {
+    closeAll();
+    openOverlay('admin-panel');
+    showToast("System Unlocked");
+  } else {
+    showToast("Invalid Credentials");
+    document.getElementById('sys-pass').value = "";
+  }
+}
+
+// Data Handling
+async function loadSystem() {
+  const snap = await db.collection("ai_tools").get();
+  nexusData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  document.getElementById("total-count").innerText = nexusData.length;
+  renderCards();
+}
+loadSystem();
+
+function renderCards() {
+  const grid = document.getElementById("nexus-grid");
+  grid.innerHTML = nexusData.map(it => {
+    const minPlan = it.pricing && it.pricing[0] ? `$${it.pricing[0].price}` : "Free";
+    return `
+    <div class="card" onclick="openDetail('${it.id}')">
+      <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}" style="width:40px; height:40px; border-radius:8px;">
+        <div class="stars" style="--p:${(it.rating/5)*100}%"></div>
+      </div>
+      <div class="c-name">${it.name}</div>
+      <div class="c-info">by ${it.provider} <img src="https://flagcdn.com/w40/${it.flag ? it.flag.toLowerCase() : 'un'}.png" class="flag-img"></div>
+      <div class="c-desc">${it.short_desc}</div>
+      <div class="price-bar">
+        <div>Min. ${minPlan}</div>
+        <div class="details-btn">DETAILS</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// 拡張された詳細表示 (long_desc, cons, pricing table)
+function openDetail(id) {
+  const it = nexusData.find(x => x.id === id);
+  const cont = document.getElementById("d-content");
+  
+  const pricingHtml = it.pricing ? it.pricing.map(p => `
+    <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border);">
+      <div><div style="font-weight:bold; color:var(--accent);">${p.plan}</div><div style="font-size:0.7rem; color:var(--muted);">${p.limit || ""}</div></div>
+      <div style="font-size:1.3rem; font-weight:800;">$${p.price}</div>
+    </div>
+  `).join("") : "";
+
+  cont.innerHTML = `
+    <div style="display:flex; align-items:center; gap:20px; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:20px;">
+      <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}" style="width:60px; height:60px; border-radius:12px;">
+      <div><h2 style="margin:0;">${it.name}</h2><div style="color:var(--accent); font-weight:bold;">${it.provider}</div></div>
+    </div>
+    <div style="background:rgba(239, 68, 68, 0.1); border-left:4px solid #ef4444; padding:15px; border-radius:8px; margin-bottom:25px;">
+      <div style="font-size:0.7rem; color:#ef4444; font-weight:900; text-transform:uppercase; margin-bottom:5px;">Gemini's Shortcomings assessment</div>
+      <div style="font-size:0.95rem;">${it.cons || "No major drawbacks reported."}</div>
+    </div>
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:1.1rem; border-bottom:1px solid var(--border); padding-bottom:10px; text-transform:uppercase;">Gemini's Professional Analysis</h3>
+      <div style="line-height:1.8; color:#d1d5db; font-size:1rem; white-space:pre-wrap; margin-top:15px;">${it.long_desc || it.short_desc}</div>
+    </div>
+    <div>
+      <h3 style="font-size:1.1rem; border-bottom:1px solid var(--border); padding-bottom:10px; text-transform:uppercase;">Pricing Details (USD)</h3>
+      <div style="margin-top:15px;">${pricingHtml}</div>
+    </div>
+  `;
+  document.getElementById("d-link").href = it.url || "#";
+  openOverlay('detail-modal');
+}
+
+function switchTab(t) {
+  const c = document.getElementById("tab-content");
+  if(t==='data') {
+    c.innerHTML = `<h3>Data Ingester</h3>
+    <textarea id="raw-j" style="width:100%; height:220px; background:#000; color:var(--accent); border:1px solid var(--border); padding:10px; font-family:monospace; font-size:0.75rem;" placeholder="Paste JSON here..."></textarea>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+      <button onclick="document.getElementById('raw-j').value=''" style="padding:12px; background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border); border-radius:8px; cursor:pointer;">Clear Input</button>
+      <button onclick="pushData()" style="padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Push to Global Sync</button>
+    </div>`;
+  } else if(t==='anal') {
+    c.innerHTML = `<h3>Analytics</h3><div style="font-size:2rem; font-weight:900; color:var(--accent);">${nexusData.length} Systems</div>`;
+  } else {
+    c.innerHTML = `<h3>Manager</h3>` + nexusData.slice(0,10).map(it => `<div style="padding:10px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">${it.name} <button onclick="deleteItem('${it.id}')" style="background:#ef4444; color:white; border:none; border-radius:4px; padding:2px 10px; cursor:pointer;">Delete</button></div>`).join("");
+  }
+}
+
+async function pushData() {
+  const items = JSON.parse(document.getElementById("raw-j").value);
+  const b = db.batch();
+  items.forEach(it => b.set(db.collection("ai_tools").doc(it.id), it, {merge:true}));
+  await b.commit();
+  showToast("Global Sync Success");
+  document.getElementById("raw-j").value = "";
+  loadSystem();
+}
+
+function showToast(m) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerText = m;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+function openOverlay(id) { document.getElementById(id).classList.add('active'); }
+function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
+
+function updateTime() {
+  const n = new Date();
+  document.getElementById('clock-t').innerText = n.toLocaleTimeString('en-US',{hour12:false});
+  document.getElementById('clock-z').innerText = Intl.DateTimeFormat().resolvedOptions().timeZone.replace('_',' ') + " | " + n.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+setInterval(updateTime,1000); updateTime();
+</script>
+</body>
+</html>
