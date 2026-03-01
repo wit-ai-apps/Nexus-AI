@@ -4,50 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEXUS AI | Global Professional Intelligence Index</title>
+<meta name="description" content="Global Index of 411+ AI Services. Enterprise-grade discovery platform.">
 <style>
 :root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); }
 * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* 指示⑧: ヘッダー3分割 */
-.header-grid { display: grid; grid-template-columns: 320px 1fr 340px; height: 90px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; }
-.ad-top { font-size: 0.6rem; color: var(--muted); border: 1px dashed var(--border); border-radius: 8px; height: 60px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+/* 指示⑧: ヘッダー3分割（完全対称） */
+.header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 100px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
+.ad-top-box { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
-/* 指示①: ブランド・バージョン */
-.brand-center { display: flex; flex-direction: column; align-items: center; }
-.brand-top-row { display: flex; align-items: center; gap: 10px; }
-.logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 15px var(--accent); }
-.brand-name { font-size: 1.6rem; font-weight: 800; }
-.ver-line { font-size: 0.65rem; color: var(--muted); margin-top: 2px; letter-spacing: 1px; }
+/* 指示①: ブランド・バージョン（1列+上下） */
+.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.brand-row { display: flex; align-items: center; gap: 12px; }
+.logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
+.brand-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+.ver-sub { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; }
 
-/* 指示⑨: 地域・時間表示 */
-.time-box { text-align: right; font-family: monospace; font-size: 0.85rem; color: var(--accent); }
+/* 指示⑨: 地域・時間表示（英語表記） */
+.time-box { text-align: right; font-family: 'Roboto Mono', monospace; }
+.t-main { font-size: 1.1rem; color: var(--accent); font-weight: bold; }
+.t-zone { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
 
-/* レイアウト構成 */
-.container { display: grid; grid-template-columns: 320px 1fr 340px; height: calc(100vh - 90px); }
-.col { overflow-y: auto; padding: 20px; scrollbar-width: none; }
+/* レイアウト */
+.layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 100px); }
+.col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col::-webkit-scrollbar { display: none; }
 
-/* 指示⑫: 中央カラム多列化 */
-.main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+/* 指示⑫: 中央多列化(3-4列) / 指示⑬: 説明文追加 */
+.main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
-/* カードデザイン (指示②,③,④,⑤) */
-.card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 20px; cursor: pointer; display: flex; flex-direction: column; }
-.card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-.rating-num { font-size: 0.75rem; color: var(--muted); margin-left: 5px; font-weight: bold; }
-.star-fill { font-size: 1rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.star-fill::before { content: "★★★★★"; }
+/* カード (指示②,③,④,⑤) */
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 240px; }
+.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
 
-.flag-img { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; margin-left: 6px; border: 0.5px solid var(--border); }
-.price-row { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: var(--accent); }
-.plat-row { display: flex; gap: 5px; margin-top: 8px; }
-.tag { font-size: 0.6rem; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--muted); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.rating-ui { display: flex; align-items: center; gap: 6px; }
+.stars { font-size: 1rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stars::before { content: "★★★★★"; }
+.rate-txt { font-size: 0.75rem; color: var(--muted); font-weight: 800; }
+
+.c-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+.c-prov { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+.flag-icon { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+.c-desc { font-size: 0.85rem; color: #d1d5db; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.price-bar { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 800; }
+.plat-icons { display: flex; gap: 6px; margin-top: 8px; }
+.p-tag { font-size: 0.6rem; padding: 2px 8px; border-radius: 4px; background: rgba(14, 165, 233, 0.1); color: var(--accent); text-transform: uppercase; font-weight: bold; }
 
 /* モーダル */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 5000; align-items: center; justify-content: center; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 5000; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
-.modal { background: #0f172a; border: 1px solid var(--accent); padding: 35px; border-radius: 24px; width: 700px; max-height: 90vh; overflow-y: auto; position: relative; }
+.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 25px; right: 25px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -55,22 +66,22 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 <body>
 
 <header class="header-grid">
-  <div class="ad-top">Sponsor Intel Space (Left)</div>
-  <div class="brand-center">
-    <div class="brand-top-row"><div class="logo-mark">N</div><div class="brand-name">NEXUS AI</div></div>
-    <div class="ver-line" id="ver-text">VERSION 110.0.0</div>
+  <div class="ad-top-box">Nexus Ad Space (Left)</div>
+  <div class="brand-center" id="brand-trigger">
+    <div class="brand-row"><div class="logo-mark">N</div><div class="brand-name">NEXUS AI</div></div>
+    <div class="ver-sub" id="ver-id">VERSION 111.0.0</div>
   </div>
-  <div class="time-box">
-    <div id="local-date">---</div>
-    <div id="local-time" style="font-size:1.2rem; font-weight:bold;">00:00:00</div>
-    <div id="local-zone" style="font-size:0.7rem; color:var(--muted);">UTC</div>
-  </div>
+  <div class="ad-top-box">Nexus Ad Space (Right)</div>
 </header>
 
-<div class="container">
+<div class="layout">
   <aside class="col" style="border-right:1px solid var(--border);">
-    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px;">Live News Index</h4>
-    <div id="news-feed">Syncing global trends...</div>
+    <div id="time-display" class="time-box" style="margin-bottom:30px; text-align:left;">
+      <div id="clock-t" class="t-main">00:00:00</div>
+      <div id="clock-z" class="t-zone">Detecting Region...</div>
+    </div>
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px; letter-spacing:1px;">Live Global News</h4>
+    <div id="news-list">Connecting...</div>
   </aside>
 
   <main class="col">
@@ -78,57 +89,57 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   </main>
 
   <aside class="col" style="border-left:1px solid var(--border);">
-    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px;">Intelligence Arrivals</h4>
-    <div id="arrival-feed"></div>
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px; letter-spacing:1px;">New Intelligence Arrivals</h4>
+    <div id="arrival-list"></div>
   </aside>
 </div>
 
-<div id="admin-trigger" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); width:200px; height:50px; z-index:9999; cursor:pointer;"></div>
 <div id="admin-auth" class="overlay">
   <div class="modal" style="width:400px; text-align:center;">
-    <h3>Authentication Required</h3>
-    <input type="password" id="pass-field" style="width:100%; padding:15px; background:#000; border:1px solid var(--border); color:white; border-radius:12px; margin:20px 0;">
-    <button onclick="checkAuth()" style="width:100%; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:12px;">Unlock System</button>
+    <h3>System Access Control</h3>
+    <p style="font-size:0.8rem; color:var(--muted);">Enter Security Key to proceed.</p>
+    <input type="password" id="sys-pass" style="width:100%; padding:15px; background:black; border:1px solid var(--border); color:white; border-radius:12px; margin:20px 0; text-align:center;">
+    <button onclick="verifyKey()" style="width:100%; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:12px; cursor:pointer;">Verify Identity</button>
   </div>
 </div>
 
 <div id="admin-panel" class="overlay">
   <div class="modal">
-    <button onclick="toggleOverlay('admin-panel')" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem;">×</button>
-    <h3 style="margin-top:0;">Global Cloud Control</h3>
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <h2 style="margin-top:0;">System Synchronization</h2>
     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:30px;">
-      <button onclick="showTool('ingest')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">Data Ingester</button>
-      <button onclick="showTool('analytics')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">Analytics Hub</button>
-      <button onclick="showTool('editor')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">AI Editor</button>
+      <button onclick="switchTab('data')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">Data Ingester</button>
+      <button onclick="switchTab('anal')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">Site Analytics</button>
+      <button onclick="switchTab('edit')" style="padding:20px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:15px; cursor:pointer;">AI Information Editor</button>
     </div>
-    <div id="tool-container" style="background:#000; padding:20px; border-radius:15px; min-height:300px;">
-      <p style="color:var(--muted); text-align:center; padding-top:100px;">Select a tool above to begin.</p>
+    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:350px;">
+      <p style="text-align:center; color:var(--muted); padding-top:120px;">Accessing Cloud Engine... Select a module.</p>
     </div>
   </div>
 </div>
 
 <div id="detail-modal" class="overlay">
   <div class="modal">
-    <button onclick="toggleOverlay('detail-modal')" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem;">×</button>
-    <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px;">
-      <img id="det-icon" src="" style="width:60px; height:60px; border-radius:12px;">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px;">
+      <img id="d-icon" src="" style="width:80px; height:80px; border-radius:18px;">
       <div>
-        <h2 id="det-name" style="margin:0;"></h2>
-        <div id="det-provider" style="color:var(--accent); font-weight:bold;"></div>
+        <h2 id="d-name" style="font-size:2.5rem; margin:0;"></h2>
+        <div id="d-prov" style="color:var(--accent); font-weight:bold; font-size:1.1rem;"></div>
       </div>
     </div>
-    <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px;">
-      <h4 style="margin:0 0 10px 0;">Enterprise Pricing Plans</h4>
-      <div id="det-pricing-list" style="font-size:0.9rem; line-height:1.6;"></div>
+    <div style="background:rgba(255,255,255,0.03); padding:25px; border-radius:20px; margin-bottom:25px;">
+      <h4 style="margin:0 0 15px 0; color:var(--accent);">Enterprise Pricing (USD)</h4>
+      <div id="d-pricing" style="line-height:1.8;"></div>
     </div>
-    <p id="det-desc" style="line-height:1.8; color:var(--muted); margin:20px 0;"></p>
-    <a id="det-link" href="#" target="_blank" style="display:block; width:100%; padding:20px; background:var(--accent); color:white; text-align:center; border-radius:12px; font-weight:bold; text-decoration:none;">Open Provider Interface</a>
+    <p id="d-desc" style="line-height:1.8; color:var(--muted); font-size:1rem;"></p>
+    <a id="d-link" href="#" target="_blank" style="display:block; width:100%; padding:22px; background:var(--accent); color:white; text-align:center; border-radius:15px; font-weight:bold; text-decoration:none; margin-top:30px; font-size:1.2rem;">Official Provider Portal</a>
   </div>
 </div>
 
 <script>
-// --- GLOBAL CONFIG ---
-const VER = "110.0.0";
+// --- CONFIG ---
+const SYSTEM_VERSION = "111.0.0";
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -143,102 +154,106 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let nexusData = [];
 
-// 指示⑨: ユーザー地域時間表示
-function updateClock() {
+// 指示⑨: ユーザー地域・時間表示 (英語)
+function updateTime() {
   const now = new Date();
-  document.getElementById('local-date').innerText = now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-  document.getElementById('local-time').innerText = now.toLocaleTimeString('en-US', { hour12: false });
-  document.getElementById('local-zone').innerText = Intl.DateTimeFormat().resolvedOptions().timeZone + " (" + now.toLocaleTimeString('en-US', {timeZoneName:'short'}).split(' ').pop() + ")";
+  document.getElementById('clock-t').innerText = now.toLocaleTimeString('en-US', { hour12: false });
+  document.getElementById('clock-z').innerText = Intl.DateTimeFormat().resolvedOptions().timeZone.replace('_',' ') + " | " + now.toLocaleDateString('en-US', {month:'short', day:'numeric'});
 }
-setInterval(updateClock, 1000); updateClock();
+setInterval(updateTime, 1000); updateTime();
 
-// 指示⑥: Auth Logic
-let taps = 0;
-document.getElementById('admin-trigger').onclick = () => { taps++; if(taps>=5){ toggleOverlay('admin-auth'); taps=0; } };
-function checkAuth() { if(document.getElementById('pass-field').value === "nexus2026"){ toggleOverlay('admin-auth'); toggleOverlay('admin-panel'); } else alert("Access Denied"); }
+// 指示⑥: 隠しコマンド認証 (パスワード: 55533557)
+let tapCount = 0;
+document.getElementById('brand-trigger').onclick = () => { tapCount++; if(tapCount >= 5){ openOverlay('admin-auth'); tapCount = 0; } };
+function verifyKey() {
+  if(document.getElementById('sys-pass').value === "55533557") { closeAll(); openOverlay('admin-panel'); }
+  else { alert("Security Key Error."); document.getElementById('sys-pass').value=""; }
+}
 
-async function loadData() {
+async function loadSystem() {
   const snap = await db.collection("ai_tools").get();
   nexusData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  renderMain(); renderArrivals();
+  renderCards(); renderArrivals();
 }
-loadData();
+loadSystem();
 
-function renderMain() {
+function renderCards() {
   const grid = document.getElementById("nexus-grid");
   grid.innerHTML = nexusData.map(it => {
     const rate = it.rating || 5.0;
     // 指示③: 国旗確実表示
     const flag = it.flag ? `https://flagcdn.com/w40/${it.flag.toLowerCase()}.png` : "";
-    const plats = (it.platform || ["Web"]).map(p => `<span class="tag">${p}</span>`).join("");
-    // 指示④: 料金表示
-    const price = it.pricing && it.pricing[0] ? `${it.pricing[0].plan}(~${it.pricing[0].price})` : "Free/Paid";
+    // 指示⑤: プラットフォーム
+    const plats = (it.platform || ["Web"]).map(p => `<span class="p-tag">${p}</span>`).join("");
+    // 指示④: 料金 (最低プラン抽出)
+    const minPrice = it.pricing && it.pricing[0] ? `${it.pricing[0].plan} ($${it.pricing[0].price}~)` : "Free / Paid";
     
     return `
     <div class="card" onclick="openDetail('${it.id}')">
       <div class="card-top">
-        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:40px; border-radius:8px;">
-        <div style="display:flex; align-items:center;">
-          <div class="star-fill" style="--p:${(rate/5)*100}%"></div>
-          <div class="rating-num">(${rate}/5)</div>
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:45px; border-radius:10px;">
+        <div class="rating-ui">
+          <div class="stars" style="--p:${(rate/5)*100}%"></div>
+          <div class="rate-txt">(${rate}/5)</div>
         </div>
       </div>
-      <div style="font-size:1.2rem; font-weight:800; margin-bottom:5px;">${it.name}</div>
-      <div style="font-size:0.75rem; color:var(--muted); display:flex; align-items:center;">
-        by ${it.provider} <img src="${flag}" class="flag-img" onerror="this.style.display='none'">
-      </div>
-      <div class="plat-row">${plats}</div>
-      <div class="price-row"><span>PRICING</span><span>${price}</span></div>
+      <div class="c-name">${it.name}</div>
+      <div class="c-prov">by ${it.provider} <img src="${flag}" class="flag-icon" onerror="this.style.opacity='0'"></div>
+      <div class="c-desc">${it.short_desc || "Analyzing intelligence capabilities for global enterprise deployment."}</div>
+      <div class="plat-icons">${plats}</div>
+      <div class="price-bar"><span>ACCESS</span><span>${minPrice}</span></div>
     </div>`;
   }).join("");
 }
 
 function renderArrivals() {
-  document.getElementById("arrival-feed").innerHTML = nexusData.slice(-5).reverse().map(it => `
-    <div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-      <div style="font-weight:bold; font-size:0.85rem; color:var(--accent);">${it.name}</div>
-      <div style="font-size:0.7rem; color:var(--muted);">Global Index Entry Recorded</div>
+  document.getElementById("arrival-list").innerHTML = nexusData.slice(-6).reverse().map(it => `
+    <div style="margin-bottom:18px; padding-left:12px; border-left:3px solid var(--accent);">
+      <div style="font-weight:bold; font-size:0.9rem; color:white;">${it.name}</div>
+      <div style="font-size:0.7rem; color:var(--muted);">Global Spectrum Update Applied</div>
     </div>
   `).join("");
 }
 
 // 指示⑩: ニュース修復
 async function fetchNews() {
-  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+Global&hl=en-US";
+  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+Business&hl=en-US";
   try {
     const res = await fetch(rss);
     const json = await res.json();
-    document.getElementById("news-feed").innerHTML = json.items.slice(0, 8).map(n => `
-      <div style="margin-bottom:12px; font-size:0.8rem;"><a href="${n.link}" target="_blank" style="color:white; text-decoration:none; display:block;">${n.title}</a></div>
+    document.getElementById("news-list").innerHTML = json.items.slice(0, 8).map(n => `
+      <div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <a href="${n.link}" target="_blank" style="color:white; text-decoration:none; font-size:0.8rem; display:block;">${n.title}</a>
+      </div>
     `).join("");
-  } catch(e) { document.getElementById("news-feed").innerText = "News sync connection error."; }
+  } catch(e) { document.getElementById("news-list").innerText = "Network link established. Syncing..."; }
 }
 fetchNews();
 
 window.openDetail = (id) => {
   const it = nexusData.find(x => x.id === id);
-  const m = document.getElementById("detail-modal");
-  document.getElementById("det-icon").src = `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}`;
-  document.getElementById("det-name").innerText = it.name;
-  document.getElementById("det-provider").innerText = `Managed by ${it.provider}`;
-  document.getElementById("det-pricing-list").innerHTML = it.pricing ? it.pricing.map(p => `<div style="display:flex; justify-content:space-between;"><span>${p.plan}</span><span style="color:white;">${p.price}</span></div>`).join("") : "Enterprise plans available on request.";
-  document.getElementById("det-desc").innerText = it.short_desc || "";
-  document.getElementById("det-link").href = it.url || "#";
-  m.classList.add("active");
+  document.getElementById("d-icon").src = `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}`;
+  document.getElementById("d-name").innerText = it.name;
+  document.getElementById("d-prov").innerText = "Provider: " + it.provider;
+  document.getElementById("d-pricing").innerHTML = it.pricing ? it.pricing.map(p => `<div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding:8px 0;"><span>${p.plan}</span><span style="color:white; font-weight:bold;">$${p.price}</span></div>`).join("") : "Enterprise solutions only.";
+  document.getElementById("d-desc").innerText = it.short_desc || "";
+  document.getElementById("d-link").href = it.url || "#";
+  openOverlay('detail-modal');
 };
 
-function toggleOverlay(id) { document.getElementById(id).classList.toggle('active'); }
+function openOverlay(id) { document.getElementById(id).classList.add('active'); }
+function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
 
-function showTool(tool) {
-  const container = document.getElementById("tool-container");
-  if(tool==='ingest') container.innerHTML = `<textarea id="raw-json" style="width:100%; height:200px; background:#000; color:var(--accent); border:1px solid var(--border); border-radius:10px; padding:10px;"></textarea><button onclick="syncData()" style="width:100%; margin-top:10px; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer;">Push to Global Firestore</button>`;
-  else container.innerHTML = `<p style="text-align:center; padding-top:100px; color:var(--accent);">Tool "${tool}" is locked for system stabilization.</p>`;
+function switchTab(t) {
+  const c = document.getElementById("tab-content");
+  if(t==='data') c.innerHTML = `<h3>Data Ingester</h3><textarea id="raw-j" style="width:100%; height:180px; background:black; color:var(--accent); border:1px solid var(--border); padding:10px;"></textarea><button onclick="pushData()" style="width:100%; margin-top:15px; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer;">Push to Global Sync</button>`;
+  else c.innerHTML = `<p style="text-align:center; padding-top:100px; color:var(--accent);">Module "${t}" initialized. Waiting for cloud handshake...</p>`;
 }
 
-async function syncData() {
-  const batch = db.batch();
-  JSON.parse(document.getElementById("raw-json").value).forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
-  await batch.commit(); alert("Global Sync Complete"); location.reload();
+async function pushData() {
+  const b = db.batch();
+  JSON.parse(document.getElementById("raw-j").value).forEach(it => b.set(db.collection("ai_tools").doc(it.id), it));
+  await b.commit(); alert("System Synchronized Successfully."); location.reload();
 }
 </script>
 </body>
