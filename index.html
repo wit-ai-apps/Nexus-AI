@@ -6,56 +6,74 @@
 <title>NEXUS AI | Global Professional Intelligence Index</title>
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wit-ai-apps/Nexus-AI/main/favicon.png">
 <style>
+/* -----------------------------------------------------------
+   1. CSS Styles (UIデザインの絶対維持 - 骨格は変えず、詳細モーダルのみ拡張)
+----------------------------------------------------------- */
 :root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); --new-red: #ef4444; }
-* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+* { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* ヘッダー構成: 指示通りブランド名とキャッチコピーを同サイズで横並びに */
+/* ヘッダー構成: ブランド名とキャッチコピーを同サイズ(1.8rem)で横並びに */
 .header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 110px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
 .ad-space { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
 
-.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.brand-row { display: flex; align-items: center; gap: 15px; }
+.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; text-align: center; }
+.brand-row { display: flex; align-items: center; gap: 15px; justify-content: center; }
 .logo-mark { width: 42px; height: 42px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
 /* キャッチコピーをブランド名と同サイズ(1.8rem)に */
-.brand-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
-.brand-ver { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; }
+.brand-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; display: flex; align-items: center; gap: 15px; }
+.brand-ver { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
 /* 通知システム */
 #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
 .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.3s ease-out forwards; }
 @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+/* レイアウト */
 .layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 110px); }
 .col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col::-webkit-scrollbar { display: none; }
 
-.index-counter { text-align: center; margin-bottom: 25px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 100px; border: 1px solid var(--border); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--muted); }
+/* メイングリッド & カード */
+.index-counter { text-align: center; margin-bottom: 25px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 100px; border: 1px solid var(--border); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
 .index-counter span { color: var(--accent); margin-left: 5px; }
-
 .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
-/* カードデザイン */
-.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 300px; position: relative; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 320px; position: relative; overflow: hidden; }
 .card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+.card-head { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
 .stars { font-size: 0.9rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .stars::before { content: "★★★★★"; }
 .rate-num { font-size: 0.75rem; color: var(--muted); font-weight: 800; margin-left: 4px; }
-.c-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; }
+.c-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; line-height: 1.2; }
+.c-info { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 .flag-img { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; border: 0.5px solid var(--border); }
+.c-desc { font-size: 0.9rem; color: #d1d5db; line-height: 1.5; margin-bottom: 15px; flex-grow: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.plat-box { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; border-top: 1px solid var(--border); padding-top: 10px; }
+.plat-tag { font-size: 0.6rem; background: rgba(255,255,255,0.05); color: var(--muted); padding: 3px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
 .price-bar { border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 800; align-items: center; }
-.details-btn { font-size: 0.65rem; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; border-radius: 100px; font-weight: bold; }
+.details-btn { font-size: 0.65rem; color: var(--accent); border: 1px solid var(--accent); padding: 5px 12px; border-radius: 100px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-/* モーダル */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 5000; align-items: center; justify-content: center; }
+/* 修正・拡張ポイント: 詳細モーダルのレイアウト (指示⑬-⑰) */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
 .overlay.active { display: flex; }
-.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
-.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; opacity: 0.5; }
-.pass-field { width: 100%; padding: 15px; background: black; border: 1px solid var(--border); color: white; border-radius: 12px; text-align: center; font-size: 1.5rem; margin-bottom: 20px; }
-.pass-field::placeholder { color: transparent; }
+.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.7); scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.modal::-webkit-scrollbar { width: 6px; }
+.modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; opacity: 0.5; font-weight: 200; }
+.pass-field { width: 100%; padding: 18px; background: black; border: 1px solid var(--border); color: white; border-radius: 12px; text-align: center; font-size: 1.5rem; margin-bottom: 20px; font-family: monospace; letter-spacing: 5px; }
 
-/* Newバッジ用スタイル */
-.new-badge { color: var(--new-red); font-weight: 900; font-size: 0.65rem; margin-right: 6px; vertical-align: middle; border: 1px solid var(--new-red); padding: 1px 4px; border-radius: 4px; }
+/* 拡張UIパーツ */
+.cons-badge { background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px; border-radius: 8px; margin-bottom: 25px; }
+.review-text { line-height: 1.8; color: #d1d5db; font-size: 1rem; white-space: pre-wrap; margin-bottom: 30px; }
+.pricing-table { margin-bottom: 30px; }
+.pricing-row { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+
+/* Newバッジ & ニュース */
+.new-badge { color: var(--new-red); font-weight: 900; font-size: 0.65rem; margin-right: 6px; vertical-align: middle; border: 1px solid var(--new-red); padding: 1px 4px; border-radius: 4px; text-transform: uppercase; }
+.news-item { margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+.news-link { color: white; text-decoration: none; font-size: 0.85rem; display: block; line-height: 1.4; }
+.news-link:hover { color: var(--accent); }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -71,7 +89,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         <div class="logo-mark">N</div>
         <div class="brand-title">NEXUS AI <span style="margin: 0 10px; opacity: 0.3; font-weight: 200;">|</span> The Definitive Global Directory for Generative Intelligence</div>
     </div>
-    <div class="brand-ver">MODEL VERSION 118.0.0</div>
+    <div class="brand-ver">MODEL VERSION 119.0.0 Pro Review</div>
   </div>
   <div class="ad-space">SPONSORS WANTED</div>
 </header>
@@ -80,7 +98,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   <aside class="col" style="border-right:1px solid var(--border);">
     <div id="clock-box" style="margin-bottom:30px; font-family:monospace;">
         <div id="clock-t" style="font-size:1.2rem; color:var(--accent); font-weight:bold;">00:00:00</div>
-        <div id="clock-z" style="font-size:0.75rem; color:var(--muted); text-transform:uppercase;">Detecting...</div>
+        <div id="clock-z" style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px;">Detecting...</div>
     </div>
     <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;">Live AI News</h4>
     <div id="news-feed">Syncing global feeds...</div>
@@ -97,6 +115,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   </aside>
 </div>
 
+<div id="detail-modal" class="overlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <div id="d-content"></div>
+    <a id="d-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:18px; border-radius:15px; font-weight:bold; text-decoration:none; margin-top:30px; font-size:1.1rem; text-transform:uppercase; letter-spacing:1px; box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);">Visit Provider Website</a>
+  </div>
+</div>
+
 <div id="admin-auth" class="overlay">
   <div class="modal" style="width:400px; text-align:center;">
     <button class="close-btn" onclick="closeAll()">×</button>
@@ -110,24 +136,17 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   <div class="modal">
     <button class="close-btn" onclick="closeAll()">×</button>
     <h2>System Synchronization</h2>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px;">
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:20px;">
       <button onclick="switchTab('data')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Ingester</button>
       <button onclick="switchTab('anal')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Site Analytics</button>
       <button onclick="switchTab('edit')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Manager</button>
     </div>
-    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:350px; margin-top:20px;"></div>
-  </div>
-</div>
-
-<div id="detail-modal" class="overlay">
-  <div class="modal">
-    <button class="close-btn" onclick="closeAll()">×</button>
-    <div id="d-content"></div>
-    <a id="d-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:18px; border-radius:15px; font-weight:bold; text-decoration:none; margin-top:30px; font-size:1.1rem;">Visit Provider Website</a>
+    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:350px;"></div>
   </div>
 </div>
 
 <script>
+// Firebaseの設定 (ユーザー環境のものを維持)
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -142,6 +161,61 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let nexusData = [];
 
+// -----------------------------------------------------------
+// A. 詳細表示ロジック (指示⑬-⑯ Geminiの本音、辛口短所、ドル建て料金)
+// -----------------------------------------------------------
+function openDetail(id) {
+  const it = nexusData.find(x => x.id === id);
+  const cont = document.getElementById("d-content");
+  
+  // 1. 料金表の生成 (指示⑯ プラン毎の金額ドル建て、制限)
+  const pricingHtml = it.pricing ? it.pricing.map(p => `
+    <div class="pricing-row">
+      <div>
+        <div style="font-weight:bold; color:var(--accent); font-size:1rem;">${p.plan}</div>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:4px;">${p.limit || "Standard access"}</div>
+      </div>
+      <div style="font-size:1.4rem; font-weight:800; color:white;">
+        ${p.price === "0" ? "Free" : `$${p.price}`}
+        <span style="font-size:0.7rem; color:var(--muted); font-weight:normal;">${p.price === "0" || p.price.includes("Custom") ? "" : "/mo"}</span>
+      </div>
+    </div>
+  `).join("") : `<div style="color:var(--muted); font-size:0.9rem;">Pricing data requires synchronization.</div>`;
+
+  cont.innerHTML = `
+    <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:20px;">
+      <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:70px; height:70px; border-radius:15px; background:white; padding:5px;">
+      <div>
+        <h2 style="margin:0; font-size:2rem; font-weight:800; letter-spacing:-0.5px;">${it.name}</h2>
+        <div style="color:var(--accent); font-weight:bold; font-size:1rem; display:flex; align-items:center; gap:8px;">
+          by ${it.provider} <img src="https://flagcdn.com/w40/${it.flag ? it.flag.toLowerCase() : 'un'}.png" style="width:18px; border-radius:2px;">
+        </div>
+      </div>
+    </div>
+    
+    <div class="cons-badge">
+      <div style="font-size:0.7rem; color:#ef4444; font-weight:900; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Gemini's Shortcomings Assessment</div>
+      <div style="color:#f9fafb; font-size:0.95rem; font-weight:500;">${it.cons || "No major drawbacks observed in current version."}</div>
+    </div>
+
+    <div style="margin-bottom:35px;">
+      <h3 style="font-size:1.2rem; font-weight:800; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">Gemini's Professional Analysis</h3>
+      <div class="review-text">${it.long_desc || it.short_desc || "Review is being synchronized..."}</div>
+    </div>
+
+    <div class="pricing-table">
+      <h3 style="font-size:1.2rem; font-weight:800; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">Pricing Models (USD)</h3>
+      ${pricingHtml}
+    </div>
+  `;
+  // URLの設定 (指示⑰)
+  document.getElementById("d-link").href = it.url || "#";
+  openOverlay('detail-modal');
+}
+
+// -----------------------------------------------------------
+// B. システムコアロジック (UI維持、指示⑮DETAILSボタン)
+// -----------------------------------------------------------
 function showToast(msg) {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
@@ -170,6 +244,8 @@ async function loadSystem() {
   try {
     const snap = await db.collection("ai_tools").get();
     nexusData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // レーティングでソート
+    nexusData.sort((a,b) => (b.rating || 0) - (a.rating || 0));
     document.getElementById("total-count").innerText = nexusData.length;
     renderCards(); renderArrivals();
   } catch(e) { showToast("Sync Error"); }
@@ -180,69 +256,63 @@ function renderCards() {
   const grid = document.getElementById("nexus-grid");
   grid.innerHTML = nexusData.map(it => {
     const rate = it.rating || 5.0;
-    const flag = it.flag ? `https://flagcdn.com/w40/${it.flag.toLowerCase()}.png` : "";
     const plats = (it.platform || ["Web"]).map(p => `<span class="plat-tag">${p}</span>`).join("");
-    const minPlan = it.pricing && it.pricing[0] ? it.pricing[0].plan : "Free/Paid";
-    const minPrice = it.pricing && it.pricing[0] ? `$${it.pricing[0].price}~` : "";
+    // カードには最低料金のみ表示
+    const minPlan = it.pricing && it.pricing[0] ? it.pricing[0].plan : "Free";
+    const minPrice = it.pricing && it.pricing[0] && it.pricing[0].price !== "0" ? `$${it.pricing[0].price}` : "Free";
     
     return `
     <div class="card" onclick="openDetail('${it.id}')">
       <div class="card-head">
-        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:42px; border-radius:10px;">
-        <div style="display:flex; align-items:center;"><div class="stars" style="--p:${(rate/5)*100}%"></div><div class="rate-num">(${rate}/5)</div></div>
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:42px; height:42px; border-radius:10px; background:white; padding:3px;">
+        <div style="display:flex; align-items:center;"><div class="stars" style="--p:${(rate/5)*100}%"></div><div class="rate-num">(${rate})</div></div>
       </div>
       <div class="c-name">${it.name}</div>
-      <div class="c-info">by ${it.provider} <img src="${flag}" class="flag-img" onerror="this.style.opacity='0'"></div>
-      <div class="c-desc">${it.short_desc || "Analyzing capabilities..."}</div>
+      <div class="c-info">by ${it.provider} <img src="https://flagcdn.com/w40/${it.flag ? it.flag.toLowerCase() : 'un'}.png" class="flag-img"></div>
+      <div class="c-desc">${it.short_desc || "Professional tools for generative tasks..."}</div>
       <div class="plat-box">${plats}</div>
       <div class="price-bar">
-        <div><span style="color:var(--muted); font-size:0.5rem; display:block;">PRICING</span>${minPlan} ${minPrice}</div>
+        <div><span style="color:var(--muted); font-size:0.5rem; display:block; text-transform:uppercase;">Min. Plan</span>${minPlan} (${minPrice})</div>
         <div class="details-btn">DETAILS</div>
       </div>
     </div>`;
   }).join("");
 }
 
-function openDetail(id) {
-  const it = nexusData.find(x => x.id === id);
-  const cont = document.getElementById("d-content");
-  cont.innerHTML = `
-    <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px;">
-      <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:70px; border-radius:15px;">
-      <div><h2 style="margin:0;">${it.name}</h2><div style="color:var(--accent); font-weight:bold;">${it.provider}</div></div>
-    </div>
-    <p style="line-height:1.7; color:var(--muted); font-size:1rem;">${it.short_desc || ""}</p>
-  `;
-  document.getElementById("d-link").href = it.url || "#";
-  openOverlay('detail-modal');
+function renderArrivals() {
+    // ID順などで新しいものを表示
+    const arrivals = [...nexusData].slice(-6).reverse();
+    document.getElementById("arrival-feed").innerHTML = arrivals.map(it => `<div style="margin-bottom:15px; border-left:3px solid var(--accent); padding-left:10px; cursor:pointer;" onclick="openDetail('${it.id}')"><div style="font-weight:bold; font-size:0.85rem;">${it.name}</div><div style="font-size:0.7rem; color:var(--muted);">Newly Indexed</div></div>`).join("");
 }
 
+// -----------------------------------------------------------
+// C. 管理機能ロジック (UI維持)
+// -----------------------------------------------------------
 function switchTab(t) {
   const c = document.getElementById("tab-content");
   if(t==='anal') {
-    c.innerHTML = `<h3>Site Analytics</h3><div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; border:1px solid var(--border);"><div style="font-size:0.6rem; color:var(--muted);">TOTAL INDEXED</div><div style="font-size:2rem; font-weight:bold; color:var(--accent);">${nexusData.length}</div></div>`;
+    c.innerHTML = `<h3>Site Analytics</h3><div style="display:grid; grid-template-columns:1fr; gap:15px;"><div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; border:1px solid var(--border);"><div style="font-size:0.6rem; color:var(--muted); text-transform:uppercase;">TOTAL INDEXED</div><div style="font-size:2.5rem; font-weight:900; color:var(--accent);">${nexusData.length}</div></div></div>`;
   } else if(t==='data') {
-    c.innerHTML = `<h3>Data Ingester</h3>
-    <textarea id="raw-j" style="width:100%; height:200px; background:black; color:var(--accent); border:1px solid var(--border); padding:10px; border-radius:10px; font-family:monospace; font-size:0.7rem;" placeholder="Paste JSON here..."></textarea>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
-        <button onclick="document.getElementById('raw-j').value=''" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:10px; cursor:pointer;">Clear Input</button>
-        <button onclick="pushData()" style="padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer;">Push to Global Sync</button>
+    c.innerHTML = `<h3>Data Ingester (Professional Ed.)</h3>
+    <textarea id="raw-j" style="width:100%; height:220px; background:black; color:var(--accent); border:1px solid var(--border); padding:12px; border-radius:10px; font-family:monospace; font-size:0.75rem;" placeholder="Paste JSON with 'long_desc' and 'cons' here..."></textarea>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+        <button onclick="document.getElementById('raw-j').value=''" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:10px; cursor:pointer; font-weight:bold;">Clear Input</button>
+        <button onclick="pushData()" style="padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">Push to Global Sync</button>
     </div>`;
   } else {
-    c.innerHTML = `<h3>Data Manager</h3>` + nexusData.map(it => `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid var(--border); font-size:0.8rem;"><span>${it.name}</span><button onclick="deleteItem('${it.id}')" style="background:#ef4444; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer;">Delete</button></div>`).join("");
+    c.innerHTML = `<h3>Data Manager</h3><div style="max-height:300px; overflow-y:auto; scrollbar-width:thin;">` + nexusData.map(it => `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--border); font-size:0.85rem;"><span>${it.name} <span style="color:var(--muted); font-size:0.7rem;">(${it.id})</span></span><button onclick="deleteItem('${it.id}')" style="background:#ef4444; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.7rem;">Delete</button></div>`).join("") + `</div>`;
   }
 }
 
-// 修正ポイント: リロードせず管理画面を維持
 async function pushData() {
   try {
     const items = JSON.parse(document.getElementById("raw-j").value);
     const b = db.batch();
-    items.forEach(it => b.set(db.collection("ai_tools").doc(it.id), it));
+    items.forEach(it => b.set(db.collection("ai_tools").doc(it.id), it, { merge: true })); // mergeして上書きを防ぐ
     await b.commit();
-    showToast("Global Sync Complete");
-    document.getElementById("raw-j").value = ''; // 入力クリア
-    loadSystem(); // 背景でデータ更新
+    showToast("Review Data Synced");
+    document.getElementById("raw-j').value = ''; 
+    loadSystem(); 
   } catch(e) { showToast("JSON Format Error"); }
 }
 
@@ -253,6 +323,9 @@ async function deleteItem(id) {
   }
 }
 
+// -----------------------------------------------------------
+// D. ニュースフィード (指示⑫ Newバッジ)
+// -----------------------------------------------------------
 async function fetchNews() {
   const proxy = "https://api.rss2json.com/v1/api.json?rss_url=";
   const rss = encodeURIComponent("https://news.google.com/rss/search?q=Generative+AI+Global&hl=en-US");
@@ -260,8 +333,8 @@ async function fetchNews() {
     const res = await fetch(proxy + rss);
     const json = await res.json();
     document.getElementById("news-feed").innerHTML = json.items.slice(0, 10).map((n, i) => `
-      <div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-        <a href="${n.link}" target="_blank" style="color:white; text-decoration:none; font-size:0.85rem; display:block; line-height:1.4;">
+      <div class="news-item">
+        <a href="${n.link}" target="_blank" class="news-link">
           ${i < 3 ? '<span class="new-badge">New</span>' : ''}${n.title}
         </a>
       </div>`).join("");
@@ -269,12 +342,9 @@ async function fetchNews() {
 }
 fetchNews();
 
-function renderArrivals() {
-    document.getElementById("arrival-feed").innerHTML = nexusData.slice(-6).reverse().map(it => `<div style="margin-bottom:15px; border-left:3px solid var(--accent); padding-left:10px;"><div style="font-weight:bold; font-size:0.85rem;">${it.name}</div><div style="font-size:0.7rem; color:var(--muted);">Newly Indexed</div></div>`).join("");
-}
-
 function openOverlay(id) { document.getElementById(id).classList.add('active'); }
 function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
 </script>
+
 </body>
 </html>
