@@ -3,75 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS AI | Global Intelligence Directory</title>
+<title id="seo-title">Nexus AI | Global Intelligence Directory & Real-time Ranking</title>
+<meta name="description" content="Explore 411+ elite AI services. The definitive global index for LLMs, Image Generation, and Neural Networks with real-time user rankings.">
+<meta name="keywords" content="AI Directory, Nexus AI, Artificial Intelligence Index, LLM Ranking, 2026 Tech Trends">
+<link rel="canonical" href="https://wit-ai-apps.github.io/Nexus-AI/" />
+
 <style>
 :root { 
-  --bg: #030712; --panel: rgba(17, 24, 39, 0.8); --accent: #0ea5e9; 
+  --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; 
   --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1);
 }
 * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 body { 
   background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; 
   margin: 0; overflow: hidden; letter-spacing: -0.01em;
-  background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.15) 0, transparent 50%), 
-                    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0, transparent 50%);
+  background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%);
 }
 
-/* Header & Brand */
+/* Header */
 .header { 
-  height: 70px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
+  height: 80px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px);
 }
-.brand-logo { 
-  display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; 
-  color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
-}
+.brand-box { display: flex; align-items: center; gap: 15px; text-decoration: none; }
 .logo-mark { 
-  width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--accent); font-size: 1.2rem;
+  width: 40px; height: 40px; background: var(--accent); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; 
+  box-shadow: 0 0 25px var(--accent); font-weight: 900; font-size: 1.5rem; color: white;
 }
+.brand-name { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -0.02em; }
+.ver-display { font-size: 0.7rem; color: var(--muted); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 50px; }
 
 /* Layout */
-.nexus-container { display: grid; grid-template-columns: 280px 1fr 380px; height: calc(100vh - 70px); }
+.container { display: grid; grid-template-columns: 300px 1fr 400px; height: calc(100vh - 80px); }
 .scroll-v { overflow-y: auto; padding: 30px; scrollbar-width: none; }
 .scroll-v::-webkit-scrollbar { display: none; }
 
-/* Discovery Feed (Left) */
-.nav-group { margin-bottom: 30px; }
-.nav-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.1em; }
-.nav-item { padding: 10px 15px; border-radius: 10px; cursor: pointer; font-size: 0.85rem; color: #d1d5db; display: flex; justify-content: space-between; }
-.nav-item:hover { background: rgba(255,255,255,0.05); }
-.nav-item.active { background: var(--accent); color: white; font-weight: 700; }
-
-/* Search & Grid */
-#nexus-search { width: 100%; padding: 20px 30px; border-radius: 100px; border: 1px solid var(--border); background: var(--panel); color: white; margin-bottom: 40px; font-size: 1rem; outline: none; }
-#nexus-search:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(14, 165, 233, 0.2); }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+/* AI Cards Grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
 .card { 
-  background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
-  padding: 24px; cursor: pointer; position: relative; overflow: hidden;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 24px;
+  padding: 24px; cursor: pointer; position: relative; display: flex; flex-direction: column;
 }
-.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
 
 /* Card Components */
-.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
-.ai-icon { width: 44px; height: 44px; border-radius: 10px; background: #1f2937; padding: 5px; object-fit: contain; }
-.badge { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: rgba(14, 165, 233, 0.1); color: var(--accent); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.ai-icon { width: 56px; height: 56px; border-radius: 14px; background: #1f2937; padding: 6px; object-fit: contain; }
+.rating { color: #fbbf24; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; }
 
-.c-name { font-size: 1.2rem; font-weight: 700; margin: 0; }
-.c-provider { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
-.c-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; height: 2.6em; overflow: hidden; }
+.name-line { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.c-name { font-size: 1.4rem; font-weight: 800; margin: 0; }
+.provider-line { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 
-/* Inspector (Right) */
-.inspector { border-left: 1px solid var(--border); background: rgba(3, 7, 18, 0.3); }
-.ins-content { display: none; }
-.ins-title { font-size: 2.2rem; margin: 10px 0; letter-spacing: -0.04em; }
+.price-tag { 
+  margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;
+}
 
-/* Setup Tool */
-.admin-trigger { position: fixed; bottom: 20px; right: 20px; opacity: 0.2; cursor: pointer; font-size: 1.2rem; }
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+/* News Section */
+.news-box { margin-bottom: 40px; }
+.news-item { 
+  padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.03); margin-bottom: 10px; 
+  font-size: 0.85rem; line-height: 1.4; border-left: 3px solid var(--accent);
+}
+.news-item a { color: white; text-decoration: none; display: block; }
+.news-item:hover { background: rgba(255,255,255,0.08); }
+
+/* Overlays */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 9999; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
+.modal { background: #111827; padding: 40px; border-radius: 30px; width: 600px; border: 1px solid var(--accent); position: relative; }
+
+.btn-close { position: absolute; top: 20px; right: 20px; background: none; border: 1px solid var(--muted); color: var(--muted); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+.btn-primary { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 20px; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -79,52 +84,54 @@ body {
 <body>
 
 <header class="header">
-  <div class="brand-logo"><div class="logo-mark">N</div>Nexus AI</div>
-  <div style="font-size: 0.75rem; color: var(--muted);">Powered by Global Spectrum v106.1</div>
+  <div class="brand-box" onclick="location.reload()">
+    <div class="logo-mark">N</div>
+    <div class="brand-name">NEXUS AI</div>
+    <div class="ver-display" id="global-version">v---</div>
+  </div>
+  <input type="text" id="nexus-search" style="width: 400px; padding: 12px 25px; border-radius: 50px; border: 1px solid var(--border); background: var(--panel); color: white;" placeholder="Global Search...">
 </header>
 
-<div class="nexus-container">
+<div class="container" id="main-ui">
   <aside class="sidebar scroll-v">
-    <div class="nav-group">
-      <div class="nav-label">Nexus Index</div>
-      <div class="nav-item active" onclick="setFilter('All')">All Systems <b id="stat-all">0</b></div>
-    </div>
-    <div class="nav-group">
-      <div class="nav-label">Categories</div>
-      <div id="cat-nav"></div>
+    <div class="news-box">
+      <h4 style="text-transform:uppercase; font-size:0.7rem; color:var(--muted); margin-bottom:15px; letter-spacing:1px;">Live Intel Feed</h4>
+      <div id="live-news">Loading global trends...</div>
     </div>
   </aside>
 
   <main class="scroll-v">
-    <input type="text" id="nexus-search" placeholder="Search by name, provider, or country...">
     <div id="nexus-grid" class="grid"></div>
   </main>
 
-  <aside class="inspector scroll-v">
-    <div id="ins-empty" style="text-align:center; padding-top:100px; color:var(--muted);">Select intelligence to inspect</div>
-    <div id="ins-view" class="ins-content">
-      <img id="det-icon" src="" class="ai-icon" style="width:70px; height:70px;">
-      <h2 id="det-name" class="ins-title"></h2>
-      <p id="det-provider" style="color:var(--accent); font-weight:bold;"></p>
-      <div id="det-badge" class="badge" style="display:inline-block; margin-bottom:20px;"></div>
-      <p id="det-desc" style="color:#9ca3af; line-height:1.7; font-size:0.95rem;"></p>
+  <aside class="sidebar scroll-v" style="border-left:1px solid var(--border);">
+    <div id="ins-view" style="display:none;">
+      <h2 id="det-name" style="font-size:2.5rem; margin-bottom:10px;"></h2>
+      <div id="det-provider" style="color:var(--accent); font-weight:bold; margin-bottom:20px;"></div>
+      <p id="det-desc" style="color:var(--muted); line-height:1.8;"></p>
       <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
-      <a id="det-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:18px; border-radius:12px; font-weight:bold; text-decoration:none;">Open Official Portal</a>
+      <a id="det-link" href="#" target="_blank" class="btn-primary" style="display:block; text-align:center; text-decoration:none;">Access Interface</a>
     </div>
   </aside>
 </div>
 
-<div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
+<div id="admin-trigger" style="position:fixed; bottom:20px; right:20px; opacity:0; cursor:pointer; width:50px; height:50px;"></div>
 <div id="admin-modal" class="overlay">
-  <div style="background:#111827; padding:40px; border-radius:24px; width:600px; border:1px solid var(--accent);">
-    <h3 style="margin-top:0;">Nexus JSON Ingester</h3>
-    <textarea id="import-data" style="width:100%; height:300px; background:#030712; color:var(--accent); border:1px solid #374151; border-radius:12px; padding:15px; font-family:monospace; font-size:0.75rem;"></textarea>
-    <button onclick="runNexusSync()" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer; width:100%;">Sync JSON to Cloud</button>
+  <div class="modal">
+    <button class="btn-close" onclick="toggleAdmin()">×</button>
+    <h3>Nexus Strategic Control</h3>
+    <p style="font-size:0.8rem; color:var(--muted);">Password Required for System Access.</p>
+    <input type="password" id="admin-pass" style="width:100%; padding:15px; border-radius:10px; background:black; border:1px solid var(--border); color:white; margin-bottom:20px;">
+    <textarea id="import-data" style="width:100%; height:200px; background:black; color:var(--accent); border:1px solid #374151; border-radius:12px; padding:15px; font-family:monospace; font-size:0.75rem;" placeholder="Paste JSON here..."></textarea>
+    <button onclick="runNexusSync()" class="btn-primary">Execute Data Synchronization</button>
   </div>
 </div>
 
 <script>
-// --- YOUR CONFIG (Screenshots 3413/3417) ---
+// --- CENTRALIZED VERSION CONTROL ---
+const SYSTEM_VERSION = "107.0.0";
+document.getElementById("global-version").innerText = "v" + SYSTEM_VERSION;
+
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -138,37 +145,46 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let nexusData = [];
-let currentFilter = "All";
+
+// Admin Logic: 5-Tap Hidden Trigger
+let tapCount = 0;
+document.getElementById("admin-trigger").onclick = () => {
+  tapCount++;
+  if(tapCount >= 5) { toggleAdmin(); tapCount = 0; }
+};
 
 async function fetchData() {
   const snap = await db.collection("ai_tools").get();
   nexusData = [];
   snap.forEach(doc => nexusData.push({ id: doc.id, ...doc.data() }));
   render();
+  fetchNews();
 }
 fetchData();
 
 function render() {
   const search = document.getElementById("nexus-search").value.toLowerCase();
   const grid = document.getElementById("nexus-grid");
-  const filtered = nexusData.filter(it => 
-    (it.name.toLowerCase().includes(search) || (it.provider && it.provider.toLowerCase().includes(search)))
-  );
+  const filtered = nexusData.filter(it => it.name.toLowerCase().includes(search));
   
-  document.getElementById("stat-all").innerText = nexusData.length;
   grid.innerHTML = filtered.map(it => {
-    // 会社名ドメインからアイコンを自動取得 (favicon_domain 項目を利用)
-    const iconUrl = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : `https://ui-avatars.com/api/?name=${it.name}&background=random&color=fff`;
-    
+    const icon = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : `https://ui-avatars.com/api/?name=${it.name}&background=random&color=fff`;
+    const stars = it.rating_text || "★★★★★";
     return `
     <div class="card" onclick="inspect('${it.id}')">
-      <div class="card-header">
-        <img src="${iconUrl}" class="ai-icon">
-        <div class="badge">${it.country || 'Global'}</div>
+      <div class="card-top">
+        <img src="${icon}" class="ai-icon">
+        <div class="rating">${stars}</div>
       </div>
-      <h3 class="c-name">${it.name}</h3>
-      <div class="c-provider">by ${it.provider || 'Independent'}</div>
-      <div class="c-desc">${it.short_desc || 'No description available for this system.'}</div>
+      <div class="name-line">
+        <h3 class="c-name">${it.name}</h3>
+      </div>
+      <div class="provider-line">by ${it.provider} ${it.flag || '🌐'}</div>
+      <div style="font-size:0.85rem; color:#9ca3af; line-height:1.5; margin-bottom:20px;">${it.short_desc || ''}</div>
+      <div class="price-tag">
+        <span style="color:var(--accent)">PRICING</span>
+        <span>${it.pricing && it.pricing[0] ? it.pricing[0].price : 'Contact for Quote'}</span>
+      </div>
     </div>`;
   }).join("");
 }
@@ -176,26 +192,31 @@ function render() {
 function inspect(id) {
   const it = nexusData.find(x => x.id === id);
   const v = document.getElementById("ins-view");
-  const e = document.getElementById("ins-empty");
-  e.style.display = "none";
   v.style.display = "block";
-  
-  document.getElementById("det-icon").src = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : "";
   document.getElementById("det-name").innerText = it.name;
-  document.getElementById("det-provider").innerText = `Provider: ${it.provider}`;
-  document.getElementById("det-badge").innerText = it.country;
+  document.getElementById("det-provider").innerText = it.provider + " " + (it.flag || "");
   document.getElementById("det-desc").innerText = it.short_desc || "";
-  document.getElementById("det-link").href = it.url || `https://www.google.com/search?q=${it.name}`;
+  document.getElementById("det-link").href = it.url || "#";
+}
+
+async function fetchNews() {
+  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+2026&hl=en-US";
+  try {
+    const res = await fetch(rss);
+    const json = await res.json();
+    document.getElementById("live-news").innerHTML = json.items.slice(0, 8).map(item => `
+      <div class="news-item"><a href="${item.link}" target="_blank">${item.title}</a></div>
+    `).join("");
+  } catch(e) { console.error("News feed error"); }
 }
 
 function runNexusSync() {
+  if(document.getElementById("admin-pass").value !== "nexus2026") return alert("Access Denied");
   const raw = document.getElementById("import-data").value;
-  try {
-    const items = JSON.parse(raw);
-    const batch = db.batch();
-    items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
-    batch.commit().then(() => { alert("Sync Successful!"); location.reload(); });
-  } catch(e) { alert("Invalid JSON format. Check your data."); }
+  const items = JSON.parse(raw);
+  const batch = db.batch();
+  items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
+  batch.commit().then(() => location.reload());
 }
 
 window.toggleAdmin = () => document.getElementById("admin-modal").classList.toggle("active");
