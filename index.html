@@ -1,162 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>NEXUS AI | Global Professional Intelligence Index</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<script type="module">
+    // ...Firebase初期化コードは省略...
 
-        // --- Firebase Config (ご自身のものに差し替えてください) ---
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "YOUR_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const aiCol = collection(db, "ai_index");
-
-        // --- 状態管理 ---
-        let isAdmin = false;
-
-        // --- 1. 隠しコマンド機能 (指示⑥) ---
-        window.addEventListener('keydown', (e) => {
-            // 'P' + 'L' + 'S' (Please) 同時押しで管理者ログイン
-            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
-                const pw = prompt("Enter Administrator Password:");
-                if (pw === "nexus2026") { // 任意のパスワード
-                    isAdmin = true;
-                    document.getElementById('admin-tools').style.display = 'flex';
-                    alert("Admin Command Center Activated.");
-                }
+    // 指示⑥: 隠しコマンド（タイトル5連クリックで発動）
+    let clickCount = 0;
+    document.querySelector('h1').addEventListener('click', () => {
+        clickCount++;
+        if (clickCount === 5) {
+            const pw = prompt("ADMIN ACCESS REQUIRED:");
+            if (pw === "nexus2026") { // 指示通りの隠しコマンド
+                document.getElementById('admin-panel').style.display = 'block';
+                alert("NEXUS COMMAND CENTER ONLINE");
             }
-        });
-
-        // --- 2. リアルタイムデータ同期 (指示⑭) ---
-        onSnapshot(aiCol, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-            renderCards(data);
-            document.getElementById('ai-count').innerText = data.length;
-        });
-
-        // --- 3. データ操作機能 (指示⑥⑰) ---
-        window.saveAI = async () => {
-            const id = document.getElementById('in-id').value;
-            await setDoc(doc(db, "ai_index", id), {
-                name: document.getElementById('in-name').value,
-                short_desc: document.getElementById('in-desc').value,
-                pricing: [{plan: "Pro", price: document.getElementById('in-price').value}],
-                rating: 4.8,
-                flag: "us",
-                version: "v119.5 PRO"
-            });
-            clearFields();
-        };
-
-        window.resetData = async () => {
-            if(confirm("Delete this entry?")) {
-                const id = document.getElementById('in-id').value;
-                await deleteDoc(doc(db, "ai_index", id));
-            }
-        };
-
-        function clearFields() {
-            ['in-id', 'in-name', 'in-desc', 'in-price'].forEach(i => document.getElementById(i).value = '');
+            clickCount = 0;
         }
-    </script>
+    });
 
-    <style>
-        :root { --blue: #00a2ff; --bg: #0b0e14; --card: #161b22; --border: #30363d; }
-        body { margin: 0; background: var(--bg); color: white; font-family: 'Inter', sans-serif; }
+    // 指示⑰: データの入力・消去機能
+    window.handleUpdate = async () => {
+        const id = document.getElementById('target-id').value;
+        if (!id) return alert("ID is required");
         
-        /* 指示⑧: ヘッダー3分割 */
-        header { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 20px; border-bottom: 1px solid #1e2530; }
-        .sp { color: #4a5568; font-size: 11px; text-align: center; letter-spacing: 2px; }
-
-        /* 指示⑥: 管理者ツールパネル */
-        #admin-tools { display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,162,255,0.1); backdrop-filter: blur(10px); padding: 20px; border: 1px solid var(--blue); border-radius: 15px; z-index: 10000; gap: 10px; }
-        
-        /* 指示⑫: 3~4列レイアウト */
-        .layout { display: grid; grid-template-columns: 260px 1fr 260px; gap: 20px; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-
-        /* カードデザイン (指示①②⑬⑮⑯) */
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; }
-        .v-tag { font-size: 9px; color: var(--blue); display: block; margin-top: 2px; }
-        .price-chip { background: #0d1117; padding: 4px 8px; border-radius: 4px; font-size: 11px; border: 1px solid var(--border); }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="sp">SPONSORS WANTED</div>
-    <div style="text-align: center;">
-        <h1 style="margin:0;">NEXUS AI</h1>
-        <div style="font-size:10px; opacity:0.6;">FIREBASE REAL-TIME SYNC PRO</div>
-    </div>
-    <div class="sp">SPONSORS WANTED</div>
-</header>
-
-<div id="admin-tools">
-    <input id="in-id" placeholder="ID">
-    <input id="in-name" placeholder="Name">
-    <input id="in-price" placeholder="Price">
-    <input id="in-desc" placeholder="Short Desc">
-    <button onclick="saveAI()" style="background:var(--blue); color:white; border:none; padding:10px;">SAVE / UPDATE</button>
-    <button onclick="resetData()" style="background:red; color:white; border:none; padding:10px;">DELETE</button>
-</div>
-
-<div class="layout">
-    <aside>
-        <div id="clock" style="color:var(--blue); font-size:18px; margin-bottom:20px;"></div>
-        <div style="border-left:3px solid var(--blue); padding-left:10px; font-weight:bold;">LIVE AI NEWS</div>
-        <div id="news-box" style="font-size:11px; margin-top:10px; opacity:0.7;">Syncing Google News API...</div>
-    </aside>
-
-    <main>
-        <div style="margin-bottom:15px; font-size:11px; opacity:0.8;">Indexing <span id="ai-count">0</span> AI Systems...</div>
-        <div id="main-grid" class="grid"></div>
-    </main>
-
-    <aside>
-        <div style="border-left:3px solid var(--blue); padding-left:10px; font-weight:bold;">SITE ANALYSIS</div> <div id="analysis-box" style="font-size:11px; margin-top:10px; opacity:0.7;">GA4 Connection Active</div>
-    </aside>
-</div>
-
-<script>
-    // 時計更新 (指示⑨)
-    setInterval(() => {
-        const d = new Date();
-        document.getElementById('clock').innerHTML = d.toLocaleTimeString('en-US',{hour12:false}) + `<br><small style="font-size:10px;opacity:0.4">${Intl.DateTimeFormat().resolvedOptions().timeZone}</small>`;
-    }, 1000);
-
-    function renderCards(list) {
-        const grid = document.getElementById('main-grid');
-        grid.innerHTML = '';
-        list.forEach(ai => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                    <img src="https://www.google.com/s2/favicons?domain=${ai.favicon_domain || 'google.com'}&sz=32">
-                    <div><strong>${ai.name}</strong><span class="v-tag">${ai.version || 'v119.5 PRO'}</span></div>
-                    <img src="https://flagcdn.com/16x12/${ai.flag || 'us'}.png" style="margin-left:auto;">
-                </div>
-                <div style="font-size:12px; opacity:0.7; height:38px; overflow:hidden; margin:10px 0;">${ai.short_desc}</div>
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span class="price-chip">Min. $${ai.pricing?.[0]?.price || '0'}</span>
-                    <div style="color:gold; font-size:11px;">★ ${ai.rating} <span style="opacity:0.5;">(${ai.rating}/5)</span></div>
-                </div>
-                <div style="margin-top:15px; border-top:1px solid var(--border); padding-top:10px; text-align:center; font-size:11px; color:var(--blue); cursor:pointer;">Details</div>
-            `;
-            grid.appendChild(card);
-        });
-    }
+        await setDoc(doc(db, "ai_index", id), {
+            name: document.getElementById('target-name').value,
+            short_desc: document.getElementById('target-desc').value,
+            updatedAt: new Date()
+        }, { merge: true });
+        alert("System Synchronized.");
+    };
 </script>
-</body>
-</html>
+
+<style>
+    /* 指示⑥: 管理者パネルのUI（承認後に表示） */
+    #admin-panel {
+        display: none; position: fixed; top: 100px; right: 20px;
+        background: rgba(0, 162, 255, 0.1); backdrop-filter: blur(20px);
+        padding: 30px; border: 2px solid #00a2ff; border-radius: 20px; z-index: 10000;
+    }
+</style>
+
+<div id="admin-panel">
+    <h3>COMMAND CENTER</h3>
+    <input id="target-id" placeholder="Target AI ID">
+    <input id="target-name" placeholder="New Name">
+    <textarea id="target-desc" placeholder="New Description"></textarea>
+    <button onclick="handleUpdate()">UPDATE DATA</button>
+    <button onclick="document.getElementById('admin-panel').style.display='none'">CLOSE</button>
+</div>
