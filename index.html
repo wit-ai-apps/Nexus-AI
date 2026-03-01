@@ -3,80 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="seo-title">Nexus AI | Global Intelligence Directory & Real-time Ranking</title>
-<meta name="description" content="Explore 411+ elite AI services. The definitive global index for LLMs, Image Generation, and Neural Networks with real-time user rankings.">
-<meta name="keywords" content="AI Directory, Nexus AI, Artificial Intelligence Index, LLM Ranking, 2026 Tech Trends">
-<link rel="canonical" href="https://wit-ai-apps.github.io/Nexus-AI/" />
-
+<title id="seo-title">Nexus AI | Global Intelligence Master Index</title>
 <style>
 :root { 
   --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; 
   --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1);
 }
-* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+* { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
 body { 
   background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; 
-  margin: 0; overflow: hidden; letter-spacing: -0.01em;
+  margin: 0; overflow: hidden;
   background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%);
 }
 
-/* Header */
+/* Header & Brand - 一列並び */
 .header { 
   height: 80px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 40px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px);
 }
-.brand-box { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.brand-box { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
 .logo-mark { 
-  width: 40px; height: 40px; background: var(--accent); border-radius: 10px;
+  width: 38px; height: 38px; background: var(--accent); border-radius: 8px;
   display: flex; align-items: center; justify-content: center; 
-  box-shadow: 0 0 25px var(--accent); font-weight: 900; font-size: 1.5rem; color: white;
+  box-shadow: 0 0 20px var(--accent); font-weight: 900; font-size: 1.4rem; color: white;
 }
-.brand-name { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -0.02em; }
-.ver-display { font-size: 0.7rem; color: var(--muted); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 50px; }
+.brand-name { font-size: 1.6rem; font-weight: 800; color: white; letter-spacing: -0.02em; }
+.time-display { font-family: monospace; font-size: 0.85rem; color: var(--accent); border-left: 1px solid var(--border); padding-left: 20px; }
+
+/* AI Card Components */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; padding: 30px; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 24px; position: relative; }
+.card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+/* 星評価：0.1単位の精密塗りつぶし */
+.star-rating {
+  display: inline-block; font-size: 1.1rem; position: relative;
+  background: linear-gradient(90deg, #fbbf24 var(--percent), #374151 var(--percent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.star-rating::before { content: "★★★★★"; }
+
+.ai-icon { width: 50px; height: 50px; border-radius: 12px; }
+.flag-img { width: 22px; height: 16px; object-fit: cover; border-radius: 2px; vertical-align: middle; }
 
 /* Layout */
-.container { display: grid; grid-template-columns: 300px 1fr 400px; height: calc(100vh - 80px); }
-.scroll-v { overflow-y: auto; padding: 30px; scrollbar-width: none; }
+.container { display: grid; grid-template-columns: 320px 1fr 380px; height: calc(100vh - 80px); }
+.scroll-v { overflow-y: auto; scrollbar-width: none; }
 .scroll-v::-webkit-scrollbar { display: none; }
 
-/* AI Cards Grid */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-.card { 
-  background: var(--panel); border: 1px solid var(--border); border-radius: 24px;
-  padding: 24px; cursor: pointer; position: relative; display: flex; flex-direction: column;
-}
-.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-
-/* Card Components */
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.ai-icon { width: 56px; height: 56px; border-radius: 14px; background: #1f2937; padding: 6px; object-fit: contain; }
-.rating { color: #fbbf24; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; }
-
-.name-line { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-.c-name { font-size: 1.4rem; font-weight: 800; margin: 0; }
-.provider-line { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-
-.price-tag { 
-  margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;
-}
-
-/* News Section */
-.news-box { margin-bottom: 40px; }
-.news-item { 
-  padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.03); margin-bottom: 10px; 
-  font-size: 0.85rem; line-height: 1.4; border-left: 3px solid var(--accent);
-}
-.news-item a { color: white; text-decoration: none; display: block; }
-.news-item:hover { background: rgba(255,255,255,0.08); }
-
-/* Overlays */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 9999; align-items: center; justify-content: center; }
+/* Admin Modal */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
-.modal { background: #111827; padding: 40px; border-radius: 30px; width: 600px; border: 1px solid var(--accent); position: relative; }
-
-.btn-close { position: absolute; top: 20px; right: 20px; background: none; border: 1px solid var(--muted); color: var(--muted); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
-.btn-primary { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 20px; }
+.modal { background: #111827; padding: 40px; border-radius: 24px; width: 600px; border: 1px solid var(--accent); position: relative; }
+.btn-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -84,53 +64,64 @@ body {
 <body>
 
 <header class="header">
-  <div class="brand-box" onclick="location.reload()">
-    <div class="logo-mark">N</div>
-    <div class="brand-name">NEXUS AI</div>
-    <div class="ver-display" id="global-version">v---</div>
+  <div class="header-left">
+    <div class="brand-box" onclick="location.reload()">
+      <div class="logo-mark">N</div>
+      <div class="brand-name">NEXUS AI</div>
+    </div>
+    <div class="time-display" id="live-time">0000-00-00 00:00:00</div>
   </div>
-  <input type="text" id="nexus-search" style="width: 400px; padding: 12px 25px; border-radius: 50px; border: 1px solid var(--border); background: var(--panel); color: white;" placeholder="Global Search...">
+  <div style="font-size: 0.7rem; color: var(--muted);">VERSION <span id="ver-tag"></span></div>
 </header>
 
-<div class="container" id="main-ui">
-  <aside class="sidebar scroll-v">
-    <div class="news-box">
-      <h4 style="text-transform:uppercase; font-size:0.7rem; color:var(--muted); margin-bottom:15px; letter-spacing:1px;">Live Intel Feed</h4>
-      <div id="live-news">Loading global trends...</div>
-    </div>
+<div class="container">
+  <aside class="sidebar scroll-v" style="padding:30px; border-right:1px solid var(--border);">
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:20px;">Live Intelligence Feed</h4>
+    <div id="live-news" style="font-size:0.85rem; line-height:1.6;">Connecting to news...</div>
   </aside>
 
   <main class="scroll-v">
     <div id="nexus-grid" class="grid"></div>
   </main>
 
-  <aside class="sidebar scroll-v" style="border-left:1px solid var(--border);">
-    <div id="ins-view" style="display:none;">
-      <h2 id="det-name" style="font-size:2.5rem; margin-bottom:10px;"></h2>
-      <div id="det-provider" style="color:var(--accent); font-weight:bold; margin-bottom:20px;"></div>
-      <p id="det-desc" style="color:var(--muted); line-height:1.8;"></p>
-      <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
-      <a id="det-link" href="#" target="_blank" class="btn-primary" style="display:block; text-align:center; text-decoration:none;">Access Interface</a>
+  <aside class="sidebar scroll-v" style="padding:30px; border-left:1px solid var(--border);">
+    <div id="ins-view">
+      <h2 id="det-name" style="font-size:2rem; margin:0;">Select AI</h2>
+      <p id="det-provider" style="color:var(--accent); font-weight:bold;"></p>
+      <div id="det-desc" style="color:var(--muted); margin-top:20px; line-height:1.8;"></div>
     </div>
   </aside>
 </div>
 
-<div id="admin-trigger" style="position:fixed; bottom:20px; right:20px; opacity:0; cursor:pointer; width:50px; height:50px;"></div>
+<div id="admin-trigger" style="position:fixed; top:0; left:0; width:200px; height:80px; z-index:10001; cursor:default;"></div>
+
 <div id="admin-modal" class="overlay">
   <div class="modal">
     <button class="btn-close" onclick="toggleAdmin()">×</button>
-    <h3>Nexus Strategic Control</h3>
-    <p style="font-size:0.8rem; color:var(--muted);">Password Required for System Access.</p>
-    <input type="password" id="admin-pass" style="width:100%; padding:15px; border-radius:10px; background:black; border:1px solid var(--border); color:white; margin-bottom:20px;">
-    <textarea id="import-data" style="width:100%; height:200px; background:black; color:var(--accent); border:1px solid #374151; border-radius:12px; padding:15px; font-family:monospace; font-size:0.75rem;" placeholder="Paste JSON here..."></textarea>
-    <button onclick="runNexusSync()" class="btn-primary">Execute Data Synchronization</button>
+    <h3>System Synchronization</h3>
+    <textarea id="import-data" style="width:100%; height:250px; background:black; color:var(--accent); border:1px solid #333; padding:15px; border-radius:12px; font-family:monospace;"></textarea>
+    <button onclick="runSync()" style="width:100%; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; margin-top:20px; border-radius:10px; cursor:pointer;">Execute Cloud Sync</button>
   </div>
 </div>
 
 <script>
-// --- CENTRALIZED VERSION CONTROL ---
-const SYSTEM_VERSION = "107.0.0";
-document.getElementById("global-version").innerText = "v" + SYSTEM_VERSION;
+const VER = "108.0.0";
+document.getElementById("ver-tag").innerText = VER;
+
+// Time Display
+function updateTime() {
+  const now = new Date();
+  document.getElementById("live-time").innerText = now.getFullYear() + "-" + 
+    String(now.getMonth()+1).padStart(2,'0') + "-" + String(now.getDate()).padStart(2,'0') + " " + 
+    now.toLocaleTimeString('ja-JP', {hour12:false});
+}
+setInterval(updateTime, 1000); updateTime();
+
+// Admin 5-Tap Logic
+let taps = 0;
+document.getElementById("admin-trigger").onclick = () => {
+  taps++; if(taps >= 5) { toggleAdmin(); taps = 0; }
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
@@ -146,81 +137,66 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let nexusData = [];
 
-// Admin Logic: 5-Tap Hidden Trigger
-let tapCount = 0;
-document.getElementById("admin-trigger").onclick = () => {
-  tapCount++;
-  if(tapCount >= 5) { toggleAdmin(); tapCount = 0; }
-};
-
 async function fetchData() {
   const snap = await db.collection("ai_tools").get();
   nexusData = [];
   snap.forEach(doc => nexusData.push({ id: doc.id, ...doc.data() }));
   render();
-  fetchNews();
 }
 fetchData();
 
 function render() {
-  const search = document.getElementById("nexus-search").value.toLowerCase();
   const grid = document.getElementById("nexus-grid");
-  const filtered = nexusData.filter(it => it.name.toLowerCase().includes(search));
-  
-  grid.innerHTML = filtered.map(it => {
-    const icon = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : `https://ui-avatars.com/api/?name=${it.name}&background=random&color=fff`;
-    const stars = it.rating_text || "★★★★★";
+  grid.innerHTML = nexusData.map(it => {
+    const icon = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : "";
+    const flag = it.flag ? `https://flagcdn.com/w40/${it.flag.toLowerCase()}.png` : "";
+    const ratingPercent = ((it.rating || 5) / 5) * 100;
+    
     return `
     <div class="card" onclick="inspect('${it.id}')">
-      <div class="card-top">
+      <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
         <img src="${icon}" class="ai-icon">
-        <div class="rating">${stars}</div>
+        <div class="star-rating" style="--percent:${ratingPercent}%"></div>
       </div>
-      <div class="name-line">
-        <h3 class="c-name">${it.name}</h3>
+      <h3 style="margin:0; font-size:1.3rem;">${it.name}</h3>
+      <div style="font-size:0.8rem; color:var(--muted); margin:8px 0;">
+        by ${it.provider} <img src="${flag}" class="flag-img">
       </div>
-      <div class="provider-line">by ${it.provider} ${it.flag || '🌐'}</div>
-      <div style="font-size:0.85rem; color:#9ca3af; line-height:1.5; margin-bottom:20px;">${it.short_desc || ''}</div>
-      <div class="price-tag">
-        <span style="color:var(--accent)">PRICING</span>
-        <span>${it.pricing && it.pricing[0] ? it.pricing[0].price : 'Contact for Quote'}</span>
-      </div>
+      <p style="font-size:0.85rem; line-height:1.5; color:#d1d5db;">${it.short_desc || ""}</p>
     </div>`;
   }).join("");
 }
 
-function inspect(id) {
-  const it = nexusData.find(x => x.id === id);
-  const v = document.getElementById("ins-view");
-  v.style.display = "block";
-  document.getElementById("det-name").innerText = it.name;
-  document.getElementById("det-provider").innerText = it.provider + " " + (it.flag || "");
-  document.getElementById("det-desc").innerText = it.short_desc || "";
-  document.getElementById("det-link").href = it.url || "#";
-}
-
 async function fetchNews() {
-  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+2026&hl=en-US";
+  const newsUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+2026&hl=en-US";
   try {
-    const res = await fetch(rss);
+    const res = await fetch(newsUrl);
     const json = await res.json();
-    document.getElementById("live-news").innerHTML = json.items.slice(0, 8).map(item => `
-      <div class="news-item"><a href="${item.link}" target="_blank">${item.title}</a></div>
+    document.getElementById("live-news").innerHTML = json.items.slice(0, 8).map(n => `
+      <div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <a href="${n.link}" target="_blank" style="color:white; text-decoration:none;">${n.title}</a>
+      </div>
     `).join("");
-  } catch(e) { console.error("News feed error"); }
+  } catch(e) { document.getElementById("live-news").innerText = "News sync error."; }
 }
+fetchNews();
 
-function runNexusSync() {
-  if(document.getElementById("admin-pass").value !== "nexus2026") return alert("Access Denied");
+window.toggleAdmin = () => document.getElementById("admin-modal").classList.toggle("active");
+window.runSync = async () => {
   const raw = document.getElementById("import-data").value;
   const items = JSON.parse(raw);
   const batch = db.batch();
   items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
-  batch.commit().then(() => location.reload());
-}
-
-window.toggleAdmin = () => document.getElementById("admin-modal").classList.toggle("active");
-document.getElementById("nexus-search").addEventListener("input", render);
+  await batch.commit(); alert("Sync Complete"); location.reload();
+};
+window.inspect = (id) => {
+  const it = nexusData.find(x => x.id === id);
+  const v = document.getElementById("ins-view");
+  v.style.display = "block";
+  document.getElementById("det-name").innerText = it.name;
+  document.getElementById("det-provider").innerText = it.provider;
+  document.getElementById("det-desc").innerText = it.short_desc || "";
+};
 </script>
 </body>
 </html>
