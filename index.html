@@ -3,174 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexus AI | Global Intelligence Index</title>
+<title>NEXUS AI | Global Intelligence Directory</title>
 <style>
-/* UI構造は固定：edited-image.jpgのレイアウトを完全維持 */
-:root { --bg: #020617; --panel: rgba(15, 23, 42, 0.9); --accent: #38bdf8; --text: #f8fafc; --muted: #64748b; --border: rgba(255, 255, 255, 0.05); }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #020617 100%); }
-.nexus-wrapper { display: grid; grid-template-columns: 280px 1fr 340px; height: 100vh; }
-.scroll-v { overflow-y: auto; padding: 25px; scrollbar-width: none; }
+:root { 
+  --bg: #030712; --panel: rgba(17, 24, 39, 0.8); --accent: #0ea5e9; 
+  --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1);
+}
+* { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+body { 
+  background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; 
+  margin: 0; overflow: hidden; letter-spacing: -0.01em;
+  background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.15) 0, transparent 50%), 
+                    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0, transparent 50%);
+}
 
-/* タイトル（隠しコマンド用） */
-.brand-title { font-size: 1.8rem; font-weight: 900; color: var(--accent); cursor: pointer; user-select: none; margin-bottom: 30px; }
+/* Header & Brand */
+.header { 
+  height: 70px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
+}
+.brand-logo { 
+  display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; 
+  color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
+}
+.logo-mark { 
+  width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--accent); font-size: 1.2rem;
+}
 
-/* カードデザイン */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-.card { background: rgba(30, 41, 59, 0.5); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; position: relative; }
-.card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.ai-logo { width: 32px; height: 32px; border-radius: 6px; background: #0f172a; margin-bottom: 12px; }
-.c-name { font-weight: 800; font-size: 1.1rem; margin: 0; }
-.c-price { font-size: 0.75rem; color: #10b981; margin-top: 5px; font-weight: bold; }
-.detail-btn { margin-top: 15px; width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 0.75rem; cursor: pointer; }
+/* Layout */
+.nexus-container { display: grid; grid-template-columns: 280px 1fr 380px; height: calc(100vh - 70px); }
+.scroll-v { overflow-y: auto; padding: 30px; scrollbar-width: none; }
+.scroll-v::-webkit-scrollbar { display: none; }
 
-/* モーダル共通スタイル */
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-.modal-content { background: #0f172a; width: 90%; max-width: 650px; padding: 40px; border-radius: 24px; border: 1px solid var(--accent); position: relative; }
-.admin-input { width: 100%; background: #020617; border: 1px solid var(--border); color: var(--accent); padding: 15px; border-radius: 10px; font-family: monospace; margin-bottom: 20px; outline: none; }
+/* Discovery Feed (Left) */
+.nav-group { margin-bottom: 30px; }
+.nav-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.1em; }
+.nav-item { padding: 10px 15px; border-radius: 10px; cursor: pointer; font-size: 0.85rem; color: #d1d5db; display: flex; justify-content: space-between; }
+.nav-item:hover { background: rgba(255,255,255,0.05); }
+.nav-item.active { background: var(--accent); color: white; font-weight: 700; }
 
-/* ユーザー用設定ボタン */
-.user-settings { position: fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 1.5rem; opacity: 0.5; }
+/* Search & Grid */
+#nexus-search { width: 100%; padding: 20px 30px; border-radius: 100px; border: 1px solid var(--border); background: var(--panel); color: white; margin-bottom: 40px; font-size: 1rem; outline: none; }
+#nexus-search:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(14, 165, 233, 0.2); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.card { 
+  background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
+  padding: 24px; cursor: pointer; position: relative; overflow: hidden;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+/* Card Components */
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+.ai-icon { width: 44px; height: 44px; border-radius: 10px; background: #1f2937; padding: 5px; object-fit: contain; }
+.badge { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: rgba(14, 165, 233, 0.1); color: var(--accent); }
+
+.c-name { font-size: 1.2rem; font-weight: 700; margin: 0; }
+.c-provider { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+.c-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; height: 2.6em; overflow: hidden; }
+
+/* Inspector (Right) */
+.inspector { border-left: 1px solid var(--border); background: rgba(3, 7, 18, 0.3); }
+.ins-content { display: none; }
+.ins-title { font-size: 2.2rem; margin: 10px 0; letter-spacing: -0.04em; }
+
+/* Setup Tool */
+.admin-trigger { position: fixed; bottom: 20px; right: 20px; opacity: 0.2; cursor: pointer; font-size: 1.2rem; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+.overlay.active { display: flex; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-<div class="nexus-wrapper">
+<header class="header">
+  <div class="brand-logo"><div class="logo-mark">N</div>Nexus AI</div>
+  <div style="font-size: 0.75rem; color: var(--muted);">Powered by Global Spectrum v106.1</div>
+</header>
+
+<div class="nexus-container">
   <aside class="sidebar scroll-v">
-    <div class="brand-title" id="nexus-logo" onclick="handleLogoClick()">Nexus AI</div>
-    <div id="cat-nav"></div>
+    <div class="nav-group">
+      <div class="nav-label">Nexus Index</div>
+      <div class="nav-item active" onclick="setFilter('All')">All Systems <b id="stat-all">0</b></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Categories</div>
+      <div id="cat-nav"></div>
+    </div>
   </aside>
 
   <main class="scroll-v">
-    <input type="text" id="nexus-search" style="width:100%; padding:16px; border-radius:50px; border:1px solid var(--border); background:rgba(255,255,255,0.05); color:white; margin-bottom:30px;" placeholder="Search Intelligence...">
+    <input type="text" id="nexus-search" placeholder="Search by name, provider, or country...">
     <div id="nexus-grid" class="grid"></div>
   </main>
 
-  <aside class="sidebar scroll-v" style="border-left:1px solid var(--border);">
-    <div id="ins-view"><h3>Select Intelligence</h3></div>
+  <aside class="inspector scroll-v">
+    <div id="ins-empty" style="text-align:center; padding-top:100px; color:var(--muted);">Select intelligence to inspect</div>
+    <div id="ins-view" class="ins-content">
+      <img id="det-icon" src="" class="ai-icon" style="width:70px; height:70px;">
+      <h2 id="det-name" class="ins-title"></h2>
+      <p id="det-provider" style="color:var(--accent); font-weight:bold;"></p>
+      <div id="det-badge" class="badge" style="display:inline-block; margin-bottom:20px;"></div>
+      <p id="det-desc" style="color:#9ca3af; line-height:1.7; font-size:0.95rem;"></p>
+      <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
+      <a id="det-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:18px; border-radius:12px; font-weight:bold; text-decoration:none;">Open Official Portal</a>
+    </div>
   </aside>
 </div>
 
-<div id="admin-modal" class="modal">
-  <div class="modal-content">
-    <h2 style="margin-top:0;">Terminal Access</h2>
-    <div id="pass-section">
-      <p>Enter Administrator Passcode:</p>
-      <input type="password" id="admin-pass" class="admin-input" placeholder="********">
-      <button onclick="checkPass()" style="width:100%; background:var(--accent); border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer;">Authenticate</button>
-    </div>
-    <div id="control-section" style="display:none;">
-      <p>Firebase Web Config (JSON):</p>
-      <textarea id="fb-config" class="admin-input" style="height:80px;"></textarea>
-      <p>Stream Ingester (Paste JSON List):</p>
-      <textarea id="import-data" class="admin-input" style="height:200px;"></textarea>
-      <div style="display:flex; gap:10px;">
-        <button onclick="saveAdminSettings()" style="flex:1; background:var(--accent); border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer;">Save & Sync</button>
-        <button onclick="closeModal('admin-modal')" style="flex:1; background:transparent; border:1px solid var(--border); color:white; padding:15px; border-radius:10px; cursor:pointer;">Exit</button>
-      </div>
-    </div>
+<div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
+<div id="admin-modal" class="overlay">
+  <div style="background:#111827; padding:40px; border-radius:24px; width:600px; border:1px solid var(--accent);">
+    <h3 style="margin-top:0;">Nexus JSON Ingester</h3>
+    <textarea id="import-data" style="width:100%; height:300px; background:#030712; color:var(--accent); border:1px solid #374151; border-radius:12px; padding:15px; font-family:monospace; font-size:0.75rem;"></textarea>
+    <button onclick="runNexusSync()" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:15px; border-radius:10px; font-weight:bold; cursor:pointer; width:100%;">Sync JSON to Cloud</button>
   </div>
 </div>
-
-<div id="detail-modal" class="modal">
-  <div class="modal-content" style="max-height:85vh; overflow-y:auto;">
-    <span style="position:absolute; top:20px; right:20px; cursor:pointer; font-size:2rem;" onclick="closeModal('detail-modal')">×</span>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
-<div class="user-settings">⚙️</div>
 
 <script>
-let clickCount = 0;
-let clickTimer;
-let db;
+// --- YOUR CONFIG (Screenshots 3413/3417) ---
+const firebaseConfig = {
+  apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
+  authDomain: "nexus-ai-55d14.firebaseapp.com",
+  projectId: "nexus-ai-55d14",
+  storageBucket: "nexus-ai-55d14.firebasestorage.app",
+  messagingSenderId: "28279756535",
+  appId: "1:28279756535:web:2ae124e9fe28736a7725f2",
+  measurementId: "G-TYNP47D66Y"
+};
 
-// 5回連続タップの判定
-function handleLogoClick() {
-  clickCount++;
-  clearTimeout(clickTimer);
-  if (clickCount === 5) {
-    document.getElementById("admin-modal").style.display = "flex";
-    clickCount = 0;
-  }
-  clickTimer = setTimeout(() => { clickCount = 0; }, 1000);
-}
-
-function checkPass() {
-  const pass = document.getElementById("admin-pass").value;
-  if (pass === "55533557") {
-    document.getElementById("pass-section").style.display = "none";
-    document.getElementById("control-section").style.display = "block";
-    document.getElementById("fb-config").value = localStorage.getItem("nexus_config") || "";
-  } else {
-    alert("Unauthorized Access.");
-  }
-}
-
-function saveAdminSettings() {
-  const config = document.getElementById("fb-config").value;
-  const data = document.getElementById("import-data").value;
-  
-  if (config) localStorage.setItem("nexus_config", config);
-  
-  if (data) {
-    try {
-      const items = JSON.parse(data);
-      const batch = db.batch();
-      items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
-      batch.commit().then(() => alert("Nexus Sync Complete."));
-    } catch(e) { alert("Invalid JSON Format."); }
-  }
-  location.reload();
-}
-
-// 初期化と起動
-const savedConfig = localStorage.getItem("nexus_config");
-if (savedConfig) {
-  firebase.initializeApp(JSON.parse(savedConfig));
-  db = firebase.firestore();
-  fetchData();
-}
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let nexusData = [];
+let currentFilter = "All";
 
 async function fetchData() {
   const snap = await db.collection("ai_tools").get();
-  const nexusData = [];
+  nexusData = [];
   snap.forEach(doc => nexusData.push({ id: doc.id, ...doc.data() }));
-  render(nexusData);
+  render();
 }
+fetchData();
 
-function render(data) {
+function render() {
+  const search = document.getElementById("nexus-search").value.toLowerCase();
   const grid = document.getElementById("nexus-grid");
-  grid.innerHTML = data.map(it => {
-    const icon = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : `https://ui-avatars.com/api/?name=${it.name}`;
+  const filtered = nexusData.filter(it => 
+    (it.name.toLowerCase().includes(search) || (it.provider && it.provider.toLowerCase().includes(search)))
+  );
+  
+  document.getElementById("stat-all").innerText = nexusData.length;
+  grid.innerHTML = filtered.map(it => {
+    // 会社名ドメインからアイコンを自動取得 (favicon_domain 項目を利用)
+    const iconUrl = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : `https://ui-avatars.com/api/?name=${it.name}&background=random&color=fff`;
+    
     return `
-    <div class="card">
-      <img src="${icon}" class="ai-logo">
+    <div class="card" onclick="inspect('${it.id}')">
+      <div class="card-header">
+        <img src="${iconUrl}" class="ai-icon">
+        <div class="badge">${it.country || 'Global'}</div>
+      </div>
       <h3 class="c-name">${it.name}</h3>
-      <div class="c-price">${(it.pricing && it.pricing[0]) ? it.pricing[0].price : 'N/A'}</div>
-      <button class="detail-btn" onclick="openDetail('${it.id}')">View Detail</button>
+      <div class="c-provider">by ${it.provider || 'Independent'}</div>
+      <div class="c-desc">${it.short_desc || 'No description available for this system.'}</div>
     </div>`;
   }).join("");
-  window.currentData = data;
 }
 
-function openDetail(id) {
-  const it = window.currentData.find(x => x.id === id);
-  const body = document.getElementById("modal-body");
-  body.innerHTML = `
-    <div style="display:flex; align-items:center; gap:20px; margin-bottom:25px;">
-      <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}" style="width:64px; border-radius:12px;">
-      <h2 style="margin:0;">${it.name}</h2>
-    </div>
-    <div style="line-height:1.8; color:#d1d5db; margin-bottom:30px;">${it.detail_en || it.short_desc}</div>
-    <a href="${it.url}" target="_blank" style="display:block; background:var(--accent); color:#020617; text-align:center; padding:18px; border-radius:12px; font-weight:900; text-decoration:none;">Access Provider</a>
-  `;
-  document.getElementById("detail-modal").style.display = "flex";
+function inspect(id) {
+  const it = nexusData.find(x => x.id === id);
+  const v = document.getElementById("ins-view");
+  const e = document.getElementById("ins-empty");
+  e.style.display = "none";
+  v.style.display = "block";
+  
+  document.getElementById("det-icon").src = it.favicon_domain ? `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}` : "";
+  document.getElementById("det-name").innerText = it.name;
+  document.getElementById("det-provider").innerText = `Provider: ${it.provider}`;
+  document.getElementById("det-badge").innerText = it.country;
+  document.getElementById("det-desc").innerText = it.short_desc || "";
+  document.getElementById("det-link").href = it.url || `https://www.google.com/search?q=${it.name}`;
 }
 
-function closeModal(id) { document.getElementById(id).style.display = "none"; }
+function runNexusSync() {
+  const raw = document.getElementById("import-data").value;
+  try {
+    const items = JSON.parse(raw);
+    const batch = db.batch();
+    items.forEach(it => batch.set(db.collection("ai_tools").doc(it.id), it));
+    batch.commit().then(() => { alert("Sync Successful!"); location.reload(); });
+  } catch(e) { alert("Invalid JSON format. Check your data."); }
+}
+
+window.toggleAdmin = () => document.getElementById("admin-modal").classList.toggle("active");
+document.getElementById("nexus-search").addEventListener("input", render);
 </script>
 </body>
 </html>
