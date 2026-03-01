@@ -3,74 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS AI | Advanced Intelligence Management</title>
+<title>NEXUS AI | Creative Director Edition</title>
 <style>
 :root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); }
 * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* ヘッダー3分割 */
+/* ヘッダー */
 .header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 100px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
 .ad-top-box { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
-
-/* ブランド・バージョン */
 .brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
 .brand-row { display: flex; align-items: center; gap: 12px; }
 .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
 .brand-name { font-size: 1.8rem; font-weight: 800; }
 .ver-sub { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; }
 
-/* 時間・地域表示 */
-.time-box { text-align: left; font-family: monospace; }
-.t-main { font-size: 1.1rem; color: var(--accent); font-weight: bold; }
-.t-zone { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+/* カスタムトースト通知 (ブラウザ標準アラートの代替) */
+#toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); animation: slideIn 0.3s ease-out forwards; }
+@keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* レイアウト */
+/* ライブ編集モード用の視覚効果 */
+body.edit-mode .card { border: 1px dashed var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); } 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); } }
+.edit-badge { display: none; position: absolute; top: -10px; right: -10px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.6rem; font-weight: 900; z-index: 10; }
+body.edit-mode .edit-badge { display: block; }
+
+/* レイアウト構成 */
 .layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 100px); }
 .col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col::-webkit-scrollbar { display: none; }
-
-/* 中央3-4列グリッド */
 .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
-/* カード */
-.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 250px; }
+/* カードデザイン */
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 250px; position: relative; }
 .card:hover { border-color: var(--accent); transform: translateY(-5px); }
 .stars { font-size: 1rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .stars::before { content: "★★★★★"; }
 .rate-txt { font-size: 0.75rem; color: var(--muted); font-weight: 800; margin-left: 5px; }
 
-/* モーダル共通 */
+/* 詳細モーダル */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 5000; align-items: center; justify-content: center; }
 .overlay.active { display: flex; }
 .modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
 
-/* 管理用リスト(削除ボタン) */
-.admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
-.del-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; }
+/* 編集用入力スタイル */
+.editable-input { background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; width: 100%; border-radius: 5px; padding: 5px; margin: 5px 0; font-family: inherit; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
+<div id="toast-container"></div>
+
 <header class="header-grid">
   <div class="ad-top-box">Nexus Ad Space (Left)</div>
   <div class="brand-center" id="brand-trigger">
     <div class="brand-row"><div class="logo-mark">N</div><div class="brand-name">NEXUS AI</div></div>
-    <div class="ver-sub">VERSION 112.0.0</div>
+    <div class="ver-sub">VERSION 113.0.0</div>
   </div>
   <div class="ad-top-box">Nexus Ad Space (Right)</div>
 </header>
 
 <div class="layout">
   <aside class="col" style="border-right:1px solid var(--border);">
-    <div class="time-box" style="margin-bottom:30px;">
-      <div id="clock-t" class="t-main">00:00:00</div>
-      <div id="clock-z" class="t-zone">Detecting...</div>
+    <div style="font-family: monospace; margin-bottom: 30px;">
+      <div id="clock-t" style="font-size:1.1rem; color:var(--accent); font-weight:bold;">00:00:00</div>
+      <div id="clock-z" style="font-size:0.7rem; color:var(--muted); text-transform:uppercase;">Detecting...</div>
     </div>
     <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase;">Live News Index</h4>
-    <div id="news-list">Connecting News...</div>
+    <div id="news-list">Connecting...</div>
   </aside>
 
   <main class="col"><div id="nexus-grid" class="main-grid"></div></main>
@@ -91,26 +95,34 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 
 <div id="admin-panel" class="overlay">
   <div class="modal">
-    <button style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;" onclick="closeAll()">×</button>
-    <h2 style="margin-top:0;">System Synchronization</h2>
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:30px;">
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <h2>System Synchronization</h2>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px;">
       <button onclick="switchTab('data')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Ingester</button>
-      <button onclick="switchTab('anal')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Site Analytics</button>
+      <button onclick="toggleEditMode()" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Live Edit Mode</button>
       <button onclick="switchTab('edit')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer;">Data Manager</button>
     </div>
-    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:400px; overflow-y:auto;"></div>
+    <div id="tab-content" style="background:#000; padding:25px; border-radius:20px; min-height:300px; margin-top:20px;"></div>
   </div>
 </div>
 
 <div id="detail-modal" class="overlay">
   <div class="modal">
-    <button style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;" onclick="closeAll()">×</button>
-    <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px;">
-      <img id="d-icon" src="" style="width:70px; height:70px; border-radius:15px;">
-      <div><h2 id="d-name" style="margin:0;"></h2><div id="d-prov" style="color:var(--accent); font-weight:bold;"></div></div>
+    <button class="close-btn" onclick="closeAll()">×</button>
+    <div id="detail-edit-container">
+      <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px;">
+        <img id="d-icon" src="" style="width:70px; height:70px; border-radius:15px;">
+        <div>
+          <h2 id="d-name" style="margin:0;"></h2>
+          <div id="d-prov" style="color:var(--accent); font-weight:bold;"></div>
+        </div>
+      </div>
+      <div id="d-pricing" style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; margin-bottom:20px;"></div>
+      <p id="d-desc" style="line-height:1.7; color:var(--muted);"></p>
     </div>
-    <div id="d-pricing" style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; margin-bottom:20px;"></div>
-    <p id="d-desc" style="line-height:1.7; color:var(--muted);"></p>
+    <div id="edit-save-box" style="display:none; margin-top:20px;">
+        <button onclick="saveDetailEdit()" style="width:100%; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:12px; cursor:pointer;">Save Global Changes</button>
+    </div>
     <a id="d-link" href="#" target="_blank" style="display:block; background:var(--accent); color:white; text-align:center; padding:15px; border-radius:12px; font-weight:bold; text-decoration:none; margin-top:20px;">Open Official Site</a>
   </div>
 </div>
@@ -129,8 +141,22 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let nexusData = [];
+let isEditMode = false;
+let currentEditingId = null;
 
-// 時間表示
+// カスタムトースト通知機能
+function showToast(msg) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerText = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
 function updateTime() {
   const now = new Date();
   document.getElementById('clock-t').innerText = now.toLocaleTimeString('en-US', { hour12: false });
@@ -138,12 +164,18 @@ function updateTime() {
 }
 setInterval(updateTime, 1000); updateTime();
 
-// 指示⑥: 隠し認証 (55533557)
 let taps = 0;
 document.getElementById('brand-trigger').onclick = () => { taps++; if(taps >= 5){ openOverlay('admin-auth'); taps = 0; } };
+
 function verifyKey() {
-  if(document.getElementById('sys-pass').value === "55533557") { closeAll(); openOverlay('admin-panel'); switchTab('edit'); }
-  else { alert("Incorrect Key."); document.getElementById('sys-pass').value=""; }
+  if(document.getElementById('sys-pass').value === "55533557") {
+    closeAll();
+    openOverlay('admin-panel');
+    showToast("System Access Unlocked");
+  } else {
+    showToast("Invalid Key");
+    document.getElementById('sys-pass').value="";
+  }
 }
 
 async function loadSystem() {
@@ -161,7 +193,8 @@ function renderCards() {
     const minPrice = it.pricing && it.pricing[0] ? `${it.pricing[0].plan} ($${it.pricing[0].price}~)` : "Free / Paid";
     const plats = (it.platform || ["Web"]).map(p => `<span style="font-size:0.6rem; background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px; margin-right:4px;">${p}</span>`).join("");
     return `
-    <div class="card" onclick="openDetail('${it.id}')">
+    <div class="card" onclick="handleCardClick('${it.id}')">
+      <div class="edit-badge">EDITABLE</div>
       <div style="display:flex; justify-content:space-between;">
         <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:40px; border-radius:8px;">
         <div style="display:flex; align-items:center;"><div class="stars" style="--p:${(rate/5)*100}%"></div><div class="rate-txt">(${rate}/5)</div></div>
@@ -171,61 +204,114 @@ function renderCards() {
       <p style="font-size:0.85rem; color:#d1d5db; line-height:1.4; margin:15px 0;">${it.short_desc || ""}</p>
       <div style="margin-top:auto;">${plats}</div>
       <div style="border-top:1px solid var(--border); margin-top:10px; padding-top:10px; font-size:0.75rem; font-weight:800; display:flex; justify-content:space-between;">
-        <span style="color:var(--accent)">PRICING</span><span>${minPrice}</span>
+        <span style="color:var(--accent)">DETAILS</span><span>${minPrice}</span>
       </div>
     </div>`;
   }).join("");
 }
 
-// 指示⑥: 個別削除・管理機能
-function switchTab(t) {
-  const c = document.getElementById("tab-content");
-  if(t==='edit') {
-    c.innerHTML = `<h4>Data Manager</h4><p style="font-size:0.7rem; color:var(--muted); margin-bottom:15px;">Manage global index entries. Duplicate or old items can be removed here.</p>` + 
-      nexusData.map(it => `<div class="admin-list-item"><span>${it.name} (${it.id})</span><button class="del-btn" onclick="deleteItem('${it.id}')">Delete</button></div>`).join("");
-  } else if(t==='data') {
-    c.innerHTML = `<h4>Data Ingester</h4><textarea id="raw-j" style="width:100%; height:200px; background:black; color:var(--accent); border:1px solid var(--border); padding:10px;"></textarea><button onclick="pushData()" style="width:100%; margin-top:10px; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">Push to Global Sync</button>`;
-  } else {
-    c.innerHTML = `<p style="text-align:center; padding-top:100px; color:var(--accent);">Module Locked.</p>`;
-  }
+function handleCardClick(id) {
+    if(isEditMode) {
+        openDetail(id, true);
+    } else {
+        openDetail(id, false);
+    }
 }
 
-async function deleteItem(id) {
-  if(confirm(`Delete ${id} from Global Firestore?`)) {
-    await db.collection("ai_tools").doc(id).delete();
-    alert("Deleted Successfully."); location.reload();
-  }
+function toggleEditMode() {
+    isEditMode = !isEditMode;
+    document.body.classList.toggle('edit-mode', isEditMode);
+    closeAll();
+    showToast(isEditMode ? "Live Edit Mode: Enabled" : "Live Edit Mode: Disabled");
 }
 
-async function pushData() {
-  const b = db.batch();
-  JSON.parse(document.getElementById("raw-j").value).forEach(it => b.set(db.collection("ai_tools").doc(it.id), it));
-  await b.commit(); alert("Sync Success."); location.reload();
-}
-
-function openDetail(id) {
+function openDetail(id, edit = false) {
   const it = nexusData.find(x => x.id === id);
-  document.getElementById("d-icon").src = `https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}`;
-  document.getElementById("d-name").innerText = it.name;
-  document.getElementById("d-prov").innerText = "Managed by " + it.provider;
-  document.getElementById("d-pricing").innerHTML = it.pricing ? it.pricing.map(p => `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${p.plan}</span><b>$${p.price}</b></div>`).join("") : "Pricing on request.";
-  document.getElementById("d-desc").innerText = it.short_desc || "";
+  currentEditingId = id;
+  const modal = document.getElementById("detail-modal");
+  
+  if(edit) {
+    document.getElementById("detail-edit-container").innerHTML = `
+      <div style="margin-bottom:20px;">
+        <label style="font-size:0.7rem; color:var(--accent);">AI Name</label>
+        <input id="edit-name" class="editable-input" value="${it.name}">
+        <label style="font-size:0.7rem; color:var(--accent);">Provider</label>
+        <input id="edit-prov" class="editable-input" value="${it.provider}">
+        <label style="font-size:0.7rem; color:var(--accent);">Short Description</label>
+        <textarea id="edit-desc" class="editable-input" style="height:80px;">${it.short_desc || ""}</textarea>
+        <label style="font-size:0.7rem; color:var(--accent);">Favicon Domain (openai.com etc)</label>
+        <input id="edit-fav" class="editable-input" value="${it.favicon_domain || ''}">
+      </div>
+    `;
+    document.getElementById("edit-save-box").style.display = "block";
+  } else {
+    document.getElementById("detail-edit-container").innerHTML = `
+      <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px;">
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain || 'google.com'}" style="width:70px; height:70px; border-radius:15px;">
+        <div><h2 style="margin:0;">${it.name}</h2><div style="color:var(--accent); font-weight:bold;">Managed by ${it.provider}</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:15px; margin-bottom:20px;">
+        ${it.pricing ? it.pricing.map(p => `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${p.plan}</span><b>$${p.price}</b></div>`).join("") : "Pricing on request."}
+      </div>
+      <p style="line-height:1.7; color:var(--muted);">${it.short_desc || ""}</p>
+    `;
+    document.getElementById("edit-save-box").style.display = "none";
+  }
+  
   document.getElementById("d-link").href = it.url || "#";
   openOverlay('detail-modal');
 }
 
+async function saveDetailEdit() {
+    const updated = {
+        name: document.getElementById("edit-name").value,
+        provider: document.getElementById("edit-prov").value,
+        short_desc: document.getElementById("edit-desc").value,
+        favicon_domain: document.getElementById("edit-fav").value
+    };
+    try {
+        await db.collection("ai_tools").doc(currentEditingId).update(updated);
+        showToast("Cloud Synchronized: " + updated.name);
+        loadSystem();
+        closeAll();
+    } catch(e) { showToast("Sync Error"); }
+}
+
+function switchTab(t) {
+  const c = document.getElementById("tab-content");
+  if(t==='edit') {
+    c.innerHTML = nexusData.map(it => `
+      <div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid var(--border); font-size:0.8rem;">
+        <span>${it.name}</span>
+        <button onclick="deleteItem('${it.id}')" style="background:#ef4444; color:white; border:none; padding:3px 8px; border-radius:4px; cursor:pointer;">Delete</button>
+      </div>
+    `).join("");
+  } else if(t==='data') {
+    c.innerHTML = `<textarea id="raw-j" style="width:100%; height:180px; background:black; color:var(--accent); border:1px solid var(--border); padding:10px;"></textarea><button onclick="pushData()" style="width:100%; margin-top:10px; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">Push to Global Sync</button>`;
+  }
+}
+
+async function deleteItem(id) {
+    if(confirm("Confirm deletion of " + id + "?")) { // カスタムモーダル化は次回
+        await db.collection("ai_tools").doc(id).delete();
+        showToast("Deleted: " + id);
+        loadSystem();
+        switchTab('edit');
+    }
+}
+
+async function pushData() {
+  try {
+    const b = db.batch();
+    JSON.parse(document.getElementById("raw-j").value).forEach(it => b.set(db.collection("ai_tools").doc(it.id), it));
+    await b.commit();
+    showToast("Global Sync Complete");
+    location.reload();
+  } catch(e) { showToast("Format Error"); }
+}
+
 function openOverlay(id) { document.getElementById(id).classList.add('active'); }
 function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
-
-async function fetchNews() {
-  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+Business&hl=en-US";
-  try {
-    const res = await fetch(rss);
-    const json = await res.json();
-    document.getElementById("news-list").innerHTML = json.items.slice(0, 8).map(n => `<div style="margin-bottom:15px; font-size:0.8rem;"><a href="${n.link}" target="_blank" style="color:white; text-decoration:none;">${n.title}</a></div>`).join("");
-  } catch(e) { document.getElementById("news-list").innerText = "News sync error."; }
-}
-fetchNews();
 </script>
 </body>
 </html>
