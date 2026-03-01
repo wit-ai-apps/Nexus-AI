@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS AI | Global Standard Intelligence Index</title>
+<title>NEXUS AI | Global Counter & Sync Fix</title>
 <style>
 :root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); }
 * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* ヘッダー3分割 */
+/* ヘッダー3分割 (指示⑧維持) */
 .header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 100px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
 .ad-top-box { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
 
-/* ブランド・タグライン (指示④) */
+/* ブランド・タグライン (指示④維持) */
 .brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
 .brand-row { display: flex; align-items: center; gap: 12px; }
 .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
@@ -21,7 +21,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .tagline { font-size: 0.75rem; color: var(--accent); font-weight: 500; letter-spacing: 0.5px; margin-top: 4px; opacity: 0.9; }
 .ver-sub { font-size: 0.6rem; color: var(--muted); margin-top: 2px; font-weight: bold; opacity: 0.7; }
 
-/* 通知システム */
+/* アプリ内通知システム (指示維持) */
 #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
 .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); animation: slideIn 0.3s ease-out forwards; }
 @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -31,14 +31,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col::-webkit-scrollbar { display: none; }
 
-/* カウンター (指示③) */
+/* 掲載件数カウンター (修正ポイント) */
 .index-counter { text-align: center; margin-bottom: 25px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 100px; border: 1px solid var(--border); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--muted); }
 .index-counter span { color: var(--accent); margin-left: 5px; }
 
 /* 中央3-4列グリッド */
 .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
-/* カードデザイン */
+/* カードデザイン (指示維持) */
 .card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 250px; position: relative; }
 .card:hover { border-color: var(--accent); transform: translateY(-5px); }
 .stars { font-size: 1rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -51,9 +51,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
 .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
 
-/* パスワード入力 (指示①: 白紙化) */
+/* パスワード入力 (白紙化維持) */
 .pass-input { width: 100%; padding: 15px; background: black; border: 1px solid var(--border); color: white; border-radius: 12px; margin-bottom: 20px; text-align: center; font-size: 1.2rem; }
-.pass-input::placeholder { color: transparent; } /* プレースホルダーを完全透明化 */
+.pass-input::placeholder { color: transparent; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -70,7 +70,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
         <div class="brand-name">NEXUS AI</div>
     </div>
     <div class="tagline">The Definitive Global Directory for Generative Intelligence</div>
-    <div class="ver-sub">VERSION 114.0.0</div>
+    <div class="ver-sub">VERSION 114.1.0</div>
   </div>
   <div class="ad-top-box">Nexus Ad Space (Right)</div>
 </header>
@@ -170,11 +170,25 @@ function verifyKey() {
   else { showToast("Authentication Failed"); document.getElementById('sys-pass').value=""; }
 }
 
+// 修正：カウンターを確実に再計算して表示するロジック
 async function loadSystem() {
-  const snap = await db.collection("ai_tools").get();
-  nexusData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  document.getElementById("total-count").innerText = nexusData.length; // 指示③: カウンター更新
-  renderCards();
+  try {
+    const snap = await db.collection("ai_tools").get();
+    nexusData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+    // UI反映
+    const counter = document.getElementById("total-count");
+    if (counter) counter.innerText = nexusData.length;
+    
+    renderCards();
+    renderArrivals();
+    
+    if(nexusData.length > 39) {
+        showToast("Cloud Sync: " + nexusData.length + " Systems Online");
+    }
+  } catch (e) {
+    showToast("Database Link Error");
+  }
 }
 loadSystem();
 
@@ -235,21 +249,51 @@ function switchTab(t) {
         <span>${it.name}</span><button onclick="deleteItem('${it.id}')" style="background:#ef4444; color:white; border:none; padding:4px 10px; border-radius:6px; cursor:pointer;">Delete</button>
       </div>`).join("");
   } else if(t==='data') {
-    c.innerHTML = `<textarea id="raw-j" style="width:100%; height:180px; background:black; color:var(--accent); border:1px solid #333; padding:10px; border-radius:10px;"></textarea><button onclick="pushData()" style="width:100%; margin-top:15px; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer;">Push to Global Sync</button>`;
+    c.innerHTML = `<textarea id="raw-j" style="width:100%; height:180px; background:black; color:var(--accent); border:1px solid #333; padding:10px; border-radius:10px;" placeholder="Paste JSON array here..."></textarea><button onclick="pushData()" style="width:100%; margin-top:15px; padding:15px; background:var(--accent); border:none; color:white; font-weight:bold; border-radius:10px; cursor:pointer;">Push to Global Sync</button>`;
   }
 }
 
 async function deleteItem(id) {
     if(confirm("Confirm deletion of " + id + "?")) {
         await db.collection("ai_tools").doc(id).delete();
-        showToast("Entry Erased: " + id);
+        showToast("Deleted: " + id);
         loadSystem(); switchTab('edit');
     }
+}
+
+async function pushData() {
+  try {
+    const b = db.batch();
+    const items = JSON.parse(document.getElementById("raw-j").value);
+    items.forEach(it => b.set(db.collection("ai_tools").doc(it.id), it));
+    await b.commit();
+    showToast("Synchronization Complete");
+    setTimeout(() => location.reload(), 1000);
+  } catch(e) { showToast("Format Error"); }
 }
 
 function openOverlay(id) { document.getElementById(id).classList.add('active'); }
 function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
 function toggleEditMode() { isEditMode = !isEditMode; showToast(isEditMode ? "Edit Mode Active" : "Edit Mode Off"); closeAll(); }
+
+async function fetchNews() {
+  const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Generative+AI+Business&hl=en-US";
+  try {
+    const res = await fetch(rss);
+    const json = await res.json();
+    document.getElementById("news-list").innerHTML = json.items.slice(0, 8).map(n => `<div style="margin-bottom:15px; font-size:0.8rem;"><a href="${n.link}" target="_blank" style="color:white; text-decoration:none;">${n.title}</a></div>`).join("");
+  } catch(e) { document.getElementById("news-list").innerText = "News sync error."; }
+}
+fetchNews();
+
+function renderArrivals() {
+  document.getElementById("arrival-list").innerHTML = nexusData.slice(-6).reverse().map(it => `
+    <div style="margin-bottom:18px; padding-left:12px; border-left:3px solid var(--accent);">
+      <div style="font-weight:bold; font-size:0.9rem; color:white;">${it.name}</div>
+      <div style="font-size:0.7rem; color:var(--muted);">Cloud Spectrum Update</div>
+    </div>
+  `).join("");
+}
 </script>
 </body>
 </html>
