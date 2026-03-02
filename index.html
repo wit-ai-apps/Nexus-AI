@@ -3,41 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS AI | v119.5.1 PRO</title>
+<title>NEXUS AI | Global Professional Intelligence Index</title>
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wit-ai-apps/Nexus-AI/main/favicon.png">
 <style>
-:root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); --new-red: #ef4444; }
-* { box-sizing: border-box; transition: all 0.2s ease; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; }
+/* --- オリジナルSpectrum UIデザインの完全復元 --- */
+:root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); }
+* { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* ヘッダー3分割 (指示⑧) */
-.header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 130px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
-.ad-space { height: 80px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); font-weight: bold; }
+.header-grid { display: grid; grid-template-columns: 320px 1fr 320px; height: 110px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); align-items: center; padding: 0 20px; z-index: 1000; position: relative; }
+.ad-space { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
 
-/* ブランド中央・バージョン併記 (指示①) */
-.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.brand-center { display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; z-index: 1001; }
 .brand-row { display: flex; align-items: center; gap: 15px; }
 .logo-mark { width: 42px; height: 42px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 20px var(--accent); }
-.brand-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
-.brand-ver { font-size: 0.7rem; color: var(--accent); margin-top: 5px; font-weight: 900; letter-spacing: 1px; }
+.brand-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
+.brand-ver { font-size: 0.65rem; color: var(--muted); margin-top: 4px; font-weight: bold; }
 
-/* レイアウト */
-.layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 130px); }
+/* 指示：お問い合わせボタンをデザインに合わせて配置 */
+.contact-nav-btn { margin-top: 8px; font-size: 0.6rem; color: var(--accent); border: 1px solid var(--accent); padding: 4px 15px; border-radius: 100px; font-weight: 800; cursor: pointer; background: transparent; }
+.contact-nav-btn:hover { background: var(--accent); color: white; }
+
+.layout { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 110px); }
 .col { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col::-webkit-scrollbar { display: none; }
 
-/* カードデザイン (指示②⑬⑮) */
 .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 340px; }
-.card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+/* カードデザイン (指示通り復元) */
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; cursor: pointer; display: flex; flex-direction: column; min-height: 320px; position: relative; }
+.card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
 .stars { font-size: 0.9rem; background: linear-gradient(90deg, #fbbf24 var(--p), #374151 var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .stars::before { content: "★★★★★"; }
 .rate-num { font-size: 0.75rem; color: var(--muted); font-weight: 800; margin-left: 4px; }
-.c-desc { font-size: 0.85rem; color: #d1d5db; line-height: 1.5; margin: 15px 0; flex-grow: 1; }
 
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
 .overlay.active { display: flex; }
-.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 600px; position: relative; }
+
+/* モーダルUIもカードと同じSpectrumデザインに統一 */
+.modal { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 750px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 0 50px rgba(14, 165, 233, 0.2); }
+.input-field { width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; border-radius: 12px; margin-bottom: 15px; font-family: inherit; }
+.input-field:focus { border-color: var(--accent); outline: none; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -49,65 +55,62 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   <div class="brand-center" id="admin-trigger">
     <div class="brand-row">
         <div class="logo-mark">N</div>
-        <div class="brand-title">NEXUS AI</div>
+        <div class="brand-title">NEXUS AI <span style="margin: 0 10px; opacity: 0.3; font-weight: 200;">|</span> Global Directory</div>
     </div>
-    <div class="brand-ver">v119.5.1 PRO REVIEW INDEX</div> <button onclick="openOverlay('contact-modal')" style="margin-top:10px; padding:5px 15px; background:transparent; border:1px solid var(--accent); color:var(--accent); border-radius:50px; font-size:0.6rem; font-weight:bold; cursor:pointer;">CONTACT SUPPORT</button>
+    <div class="brand-ver">MODEL VERSION 119.5.2 PRO REVIEW</div>
+    <button class="contact-nav-btn" onclick="openOverlay('contact-modal')">CONTACT SUPPORT</button>
   </div>
   <div class="ad-space">SPONSORS WANTED</div>
 </header>
 
 <div class="layout">
   <aside class="col" style="border-right:1px solid var(--border);">
-    <div id="clock-box" style="margin-bottom:20px;">
-        <div id="clock-t" style="font-size:1.5rem; color:var(--accent); font-weight:bold;">00:00:00</div>
-        <div id="clock-z" style="font-size:0.8rem; color:var(--muted);">Detecting...</div>
+    <div id="clock-box" style="margin-bottom:30px;">
+        <div id="clock-t" style="font-size:1.2rem; color:var(--accent); font-weight:bold;">00:00:00</div>
+        <div id="clock-z" style="font-size:0.75rem; color:var(--muted);">Detecting...</div>
     </div>
-    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px;">Live News</h4>
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;">Live AI News</h4>
     <div id="news-feed" style="font-size:0.8rem; opacity:0.6;">Syncing feeds...</div>
   </aside>
 
   <main class="col">
-    <div style="text-align:center; margin-bottom:20px; font-size:0.7rem; letter-spacing:2px; color:var(--muted);">TOTAL INDEX: <span id="total-count" style="color:var(--accent);">0</span></div>
+    <div style="text-align: center; margin-bottom: 25px; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--muted);">TOTAL INDEX: <span id="total-count" style="color:var(--accent);">0</span></div>
     <div id="nexus-grid" class="main-grid"></div>
   </main>
 
   <aside class="col" style="border-left:1px solid var(--border);">
-    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; margin-bottom:15px;">New Arrivals</h4>
+    <h4 style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;">New Arrivals</h4>
     <div id="arrival-feed"></div>
   </aside>
 </div>
 
 <div id="contact-modal" class="overlay">
-  <div class="modal">
-    <button class="close-btn" style="position:absolute; top:20px; right:20px; color:white; background:none; border:none; font-size:2rem; cursor:pointer;" onclick="closeAll()">×</button>
-    <h2 style="color:var(--accent);">Contact Support</h2>
-    <input type="text" id="c-name" placeholder="Name" style="width:100%; padding:12px; margin-bottom:15px; background:#000; border:1px solid var(--border); color:white; border-radius:8px;">
-    <input type="email" id="c-email" placeholder="Email" style="width:100%; padding:12px; margin-bottom:15px; background:#000; border:1px solid var(--border); color:white; border-radius:8px;">
-    <textarea id="c-msg" placeholder="Your Message" style="width:100%; height:120px; padding:12px; margin-bottom:15px; background:#000; border:1px solid var(--border); color:white; border-radius:8px;"></textarea>
-    <div style="text-align:center; margin-bottom:15px; font-size:0.8rem;">12 + 5 = ? <input type="number" id="c-captcha" style="width:60px; background:#000; border:1px solid var(--accent); color:white;"></div>
-    <button onclick="sendInquiry()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">Send Message</button>
+  <div class="modal" style="width:500px;">
+    <button style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeAll()">×</button>
+    <h2 style="margin-bottom:25px; font-weight:800; letter-spacing:-1px;">Contact System</h2>
+    <input type="text" id="c-name" class="input-field" placeholder="Full Name">
+    <input type="email" id="c-email" class="input-field" placeholder="Email Address">
+    <textarea id="c-msg" class="input-field" style="height:120px;" placeholder="How can we help?"></textarea>
+    <div style="font-size:0.8rem; margin-bottom:20px; text-align:center; color:var(--muted);">Security: 12 + 5 = ? <input type="number" id="c-captcha" style="width:60px; background:black; border:1px solid var(--accent); color:white; border-radius:5px; padding:5px;"></div>
+    <button onclick="sendInquiry()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:bold; cursor:pointer; font-size:1rem;">SEND MESSAGE</button>
   </div>
 </div>
 
 <div id="admin-panel" class="overlay">
-  <div class="modal" style="width:800px;">
-    <button class="close-btn" style="position:absolute; top:20px; right:20px; color:white; background:none; border:none; font-size:2rem; cursor:pointer;" onclick="closeAll()">×</button>
-    <h2 style="border-bottom:1px solid var(--accent); padding-bottom:10px;">Admin Command Center</h2>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-        <div>
-            <h4>Support Inbox (指示)</h4>
-            <div id="inbox-list" style="max-height:300px; overflow-y:auto; background:#000; padding:10px; border-radius:10px;"></div>
-        </div>
-        <div>
-            <h4>Data Ingester</h4>
-            <textarea id="raw-j" style="width:100%; height:200px; background:#000; color:var(--accent); border:1px solid var(--border); font-family:monospace; font-size:0.7rem;" placeholder="Paste JSON..."></textarea>
-            <button onclick="pushData()" style="width:100%; margin-top:10px; padding:10px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Sync Data</button>
-        </div>
+  <div class="modal">
+    <button style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeAll()">×</button>
+    <h2 style="margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:15px;">System Synchronization</h2>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-bottom:30px;">
+      <button onclick="switchTab('data')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer; font-weight:bold;">Data Ingester</button>
+      <button onclick="switchTab('msg')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer; font-weight:bold;">Inbox</button>
+      <button onclick="switchTab('edit')" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; border-radius:12px; cursor:pointer; font-weight:bold;">Manager</button>
     </div>
+    <div id="tab-content" style="background:rgba(0,0,0,0.3); padding:25px; border-radius:20px; border:1px solid var(--border); min-height:300px;"></div>
+  </div>
 </div>
 
 <script>
-// Firebase Config
+// Firebase初期化とデータ同期は維持
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -119,75 +122,58 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 5回クリックで管理者認証
+// 指示⑥: 隠しコマンド
 let taps = 0;
-document.getElementById('admin-trigger').addEventListener('click', () => {
+document.getElementById('admin-trigger').onclick = () => {
     taps++;
     if(taps >= 5) {
-        const pw = prompt("Enter System Key:");
-        if(pw === "55533557") { openOverlay('admin-panel'); loadInbox(); }
+        const pw = prompt("Enter System Access Key:");
+        if(pw === "55533557") openOverlay('admin-panel');
         taps = 0;
     }
-});
+};
 
-// お問い合わせ送信 (Firestore "inquiries" コレクション)
+// お問い合わせ機能
 async function sendInquiry() {
-    const captcha = document.getElementById('c-captcha').value;
-    if(captcha !== "17") return alert("Captcha Error");
+    if(document.getElementById('c-captcha').value !== "17") return alert("Security Check Failed");
     await db.collection("inquiries").add({
         name: document.getElementById('c-name').value,
         email: document.getElementById('c-email').value,
         msg: document.getElementById('c-msg').value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
-    alert("Sent Successfully");
+    alert("Message Synced to System");
     closeAll();
 }
 
-// インボックス読み込み
-async function loadInbox() {
-    const snap = await db.collection("inquiries").orderBy("timestamp", "desc").get();
-    document.getElementById('inbox-list').innerHTML = snap.docs.map(doc => {
-        const d = doc.data();
-        return `<div style="border-bottom:1px solid #333; padding:10px; font-size:0.7rem;">
-            <b style="color:var(--accent)">${d.name}</b>: ${d.msg}<br>
-            <a href="mailto:${d.email}" style="color:gray">[Reply]</a>
-        </div>`;
-    }).join("");
+function switchTab(t) {
+    const c = document.getElementById("tab-content");
+    if(t === 'msg') {
+        c.innerHTML = `<h3>Support Inbox</h3><div id="inbox-render">Loading...</div>`;
+        db.collection("inquiries").orderBy("timestamp", "desc").get().then(snap => {
+            document.getElementById('inbox-render').innerHTML = snap.docs.map(doc => {
+                const d = doc.data();
+                return `<div style="border-bottom:1px solid var(--border); padding:10px; font-size:0.8rem;"><b>${d.name}</b>: ${d.msg} <a href="mailto:${d.email}" style="color:var(--accent); margin-left:10px;">Reply</a></div>`;
+            }).join("");
+        });
+    } else {
+        c.innerHTML = `<div style="text-align:center; color:var(--muted); margin-top:50px;">Module ${t} is ready for synchronization.</div>`;
+    }
 }
 
-// データ同期
+// データ描画 (UI復元)
 async function loadSystem() {
     const snap = await db.collection("ai_tools").get();
     const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    document.getElementById('total-count').innerText = data.length;
-    document.getElementById('nexus-grid').innerHTML = data.map(it => `
+    document.getElementById("total-count").innerText = data.length;
+    document.getElementById("nexus-grid").innerHTML = data.map(it => `
         <div class="card">
-            <div style="display:flex; justify-content:space-between;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
                 <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}" style="width:40px; border-radius:8px;">
-                <div class="stars" style="--p:${(it.rating/5)*100}%"></div>
+                <div style="text-align:right;">
+                    <div class="stars" style="--p:${(it.rating/5)*100}%"></div>
+                    <div class="rate-num">(${it.rating}/5)</div>
+                </div>
             </div>
-            <div style="font-weight:800; font-size:1.2rem; margin-top:10px;">${it.name}</div>
-            <div style="font-size:0.6rem; color:var(--accent);">by ${it.provider}</div>
-            <div class="c-desc">${it.short_desc}</div>
-            <div style="border-top:1px solid #333; padding-top:10px; display:flex; justify-content:space-between; font-size:0.7rem; font-weight:bold;">
-                <span>Min. $${it.pricing?.[0]?.price || '0'}</span>
-                <span style="color:var(--accent)">DETAILS</span>
-            </div>
-        </div>
-    `).join("");
-}
-loadSystem();
-
-function openOverlay(id) { document.getElementById(id).classList.add('active'); }
-function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
-
-// 時間更新
-setInterval(() => {
-    const n = new Date();
-    document.getElementById('clock-t').innerText = n.toLocaleTimeString('en-US',{hour12:false});
-    document.getElementById('clock-z').innerText = Intl.DateTimeFormat().resolvedOptions().timeZone.replace('_',' ');
-}, 1000);
-</script>
-</body>
-</html>
+            <div class="c-name">${it.name}</div>
+            <div style="font-size:0.65rem; color:var(--accent); font-weight:
