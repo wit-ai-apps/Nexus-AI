@@ -3,97 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS AI | Global Directory</title>
+<title>NEXUS AI | v119.5.6 PRO</title>
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/wit-ai-apps/Nexus-AI/main/favicon.png">
 <style>
 /* Spectrum UI Core */
-:root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); }
+:root { --bg: #030712; --panel: rgba(17, 24, 39, 0.85); --accent: #0ea5e9; --text: #f9fafb; --muted: #9ca3af; --border: rgba(255, 255, 255, 0.1); --col-w: 320px; }
 * { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; background-image: radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0, transparent 50%); }
 
-/* 🔴 ヘッダー完全3分割構造の定義 */
+/* 🔴 ヘッダー：下のカラム（320px 1fr 320px）と完全に一致させる */
 .header-bar { 
     display: grid; 
-    grid-template-columns: 320px 1fr 320px; /* 左右等幅の広告枠、中央に操作枠 */
+    grid-template-columns: var(--col-w) 1fr var(--col-w); 
     height: 120px; 
     border-bottom: 1px solid var(--border); 
     backdrop-filter: blur(25px); 
     align-items: center; 
-    padding: 0 20px; 
+    padding: 0; /* カラムラインを合わせるため0に */
     z-index: 1000; 
     position: relative; 
 }
 
-/* 広告スペース（左右） */
-.ad-slot { height: 70px; border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); letter-spacing: 2px; font-weight: bold; }
+/* 広告スペース（左右：320px幅に完全固定） */
+.ad-slot { 
+    width: var(--col-w);
+    height: 100%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 0.6rem; 
+    color: var(--accent); 
+    letter-spacing: 2px; 
+    font-weight: bold;
+    border-right: 1px solid var(--border); /* 左カラムとの境界線 */
+}
+.ad-slot.right { border-right: none; border-left: 1px solid var(--border); }
 
-/* 🔴 中央ブロック：この内部で左にVer、中央にLogo、右にContactを配置 */
+/* 🔴 中央ブロック：左右に要素、中央にロゴ一行 */
 .nav-center-block { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    padding: 0 30px; 
+    padding: 0 40px; 
     height: 100%;
 }
 
-.brand-identity { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.logo-sq { width: 38px; height: 38px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 15px var(--accent); }
-.logo-txt { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; }
+/* 左端：バージョン番号 */
+.ver-indicator { font-size: 0.65rem; color: var(--accent); font-weight: 900; letter-spacing: 0.05em; }
 
-/* 左寄り：バージョン番号 */
-.ver-indicator { font-size: 0.65rem; color: var(--accent); font-weight: 900; letter-spacing: 0.05em; align-self: flex-end; margin-bottom: 15px; }
+/* 中央：ロゴマークとサイト名を同一行に */
+.brand-identity { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    cursor: pointer; 
+}
+.logo-sq { width: 34px; height: 34px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; box-shadow: 0 0 15px var(--accent); }
+.logo-txt { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
+.logo-sub { font-size: 0.8rem; color: var(--muted); opacity: 0.5; margin-left: 10px; font-weight: 400; }
 
-/* 右寄り：CONTACT USボタン */
+/* 右端：CONTACT US */
 .contact-us-trigger { 
     font-size: 0.65rem; 
     color: var(--text); 
     border: 1px solid var(--accent); 
-    padding: 8px 20px; 
+    padding: 8px 22px; 
     border-radius: 100px; 
     font-weight: 800; 
     cursor: pointer; 
-    background: rgba(14, 165, 233, 0.1);
-    align-self: flex-end;
-    margin-bottom: 15px;
+    background: rgba(14, 165, 233, 0.05);
 }
-.contact-us-trigger:hover { background: var(--accent); color: white; box-shadow: 0 0 15px var(--accent); }
+.contact-us-trigger:hover { background: var(--accent); color: white; }
 
-/* メインレイアウト */
-.layout-frame { display: grid; grid-template-columns: 320px 1fr 320px; height: calc(100vh - 120px); }
+/* メインレイアウト（ヘッダーと幅を統一） */
+.layout-frame { display: grid; grid-template-columns: var(--col-w) 1fr var(--col-w); height: calc(100vh - 120px); }
 .col-scroll { overflow-y: auto; padding: 25px; scrollbar-width: none; }
 .col-scroll::-webkit-scrollbar { display: none; }
 
-.main-counter { text-align: center; margin-bottom: 20px; font-size: 0.7rem; font-weight: 800; color: var(--muted); letter-spacing: 2px; }
+/* カードデザイン */
 .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-
-/* モーダル */
-.overlay-screen { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-.overlay-screen.active { display: flex; }
-.modal-window { background: #0f172a; border: 1px solid var(--accent); padding: 40px; border-radius: 28px; width: 600px; position: relative; box-shadow: 0 0 40px rgba(14, 165, 233, 0.15); }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 22px; min-height: 330px; display: flex; flex-direction: column; }
 </style>
 </head>
 <body>
 
 <header class="header-bar">
-  <div class="ad-slot">SPONSORS WANTED</div> <div class="nav-center-block"> <div class="ver-indicator">MODEL VERSION 119.5.5 PRO REVIEW</div> <div class="brand-identity" id="admin-trigger">
+  <div class="ad-slot">SPONSORS WANTED</div>
+  
+  <div class="nav-center-block">
+      <div class="ver-indicator">MODEL VERSION 119.5.6 PRO REVIEW</div>
+      
+      <div class="brand-identity" id="admin-trigger">
           <div class="logo-sq">N</div>
           <div class="logo-txt">NEXUS AI</div>
+          <div class="logo-sub">| The Definitive Global Directory for Generative Intelligence</div>
       </div>
       
-      <div class="contact-us-trigger" onclick="openModal('contact-form')">CONTACT US</div> </div>
+      <div class="contact-us-trigger" onclick="location.href='#contact'">CONTACT US</div>
+  </div>
   
-  <div class="ad-slot">SPONSORS WANTED</div> </header>
+  <div class="ad-slot right">SPONSORS WANTED</div>
+</header>
 
 <div class="layout-frame">
   <aside class="col-scroll" style="border-right:1px solid var(--border);">
     <div id="clock-t" style="font-size:1.3rem; color:var(--accent); font-weight:bold;">00:00:00</div>
     <div id="clock-z" style="font-size:0.75rem; color:var(--muted); margin-bottom:30px;">Detecting...</div>
-    <h4 style="font-size:0.6rem; color:var(--muted); text-transform:uppercase;">Live News</h4>
+    <h4 style="font-size:0.6rem; color:var(--muted); text-transform:uppercase;">Live AI News</h4>
     <div id="news-feed" style="font-size:0.8rem; opacity:0.6;">Syncing...</div>
   </aside>
 
   <main class="col-scroll">
-    <div class="main-counter">TOTAL AI INDEX: <span id="tool-count" style="color:var(--accent);">0</span> SYSTEMS</div>
+    <div style="text-align: center; margin-bottom: 20px; font-size: 0.7rem; font-weight: 800; color: var(--muted); letter-spacing: 2px;">TOTAL AI INDEX: <span id="tool-count" style="color:var(--accent);">0</span> SYSTEMS</div>
     <div id="nexus-grid-display" class="grid-container"></div>
   </main>
 
@@ -103,20 +124,10 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
   </aside>
 </div>
 
-<div id="contact-form" class="overlay-screen">
-  <div class="modal-window">
-    <button style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeAll()">×</button>
-    <h2 style="font-weight:800; margin-bottom:20px; letter-spacing:-1px;">Contact Us</h2>
-    <input type="text" id="user-name" style="width:100%; padding:15px; background:black; border:1px solid var(--border); color:white; border-radius:12px; margin-bottom:15px;" placeholder="Full Name">
-    <textarea id="user-msg" style="width:100%; height:120px; background:black; border:1px solid var(--border); color:white; border-radius:12px; padding:15px; margin-bottom:15px;" placeholder="Your Message"></textarea>
-    <div style="text-align:center; font-size:0.8rem; margin-bottom:15px;">Bot Check: 12 + 5 = ? <input type="number" id="bot-cap" style="width:60px; background:black; border:1px solid var(--accent); color:white; padding:5px; border-radius:5px;"></div>
-    <button onclick="submitContact()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:bold; cursor:pointer;">SEND TO DATABASE</button>
-  </div>
-</div>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyD0JXpRxLnwrtPsqfK63LHhLG4J999VfwU",
   authDomain: "nexus-ai-55d14.firebaseapp.com",
@@ -128,13 +139,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 指示⑥: 隠しコマンド（ブランド5連打）
+// 隠しコマンド（ブランドクリック）
 let taps = 0;
 document.getElementById('admin-trigger').onclick = () => {
     taps++;
     if(taps >= 5) {
-        const pw = prompt("ADMIN AUTHORIZATION REQUIRED:");
-        if(pw === "55533557") alert("Admin Console Authorized. Synchronization Active.");
+        const pw = prompt("ADMIN AUTHORIZATION:");
+        if(pw === "55533557") alert("Authorized.");
         taps = 0;
     }
 };
@@ -144,7 +155,7 @@ async function syncNexus() {
     const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     document.getElementById("tool-count").innerText = data.length;
     document.getElementById("nexus-grid-display").innerHTML = data.map(it => `
-        <div class="card" style="background:var(--panel); border:1px solid var(--border); border-radius:24px; padding:22px; cursor:pointer; min-height:330px; display:flex; flex-direction:column;">
+        <div class="card">
             <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
                 <img src="https://www.google.com/s2/favicons?sz=128&domain=${it.favicon_domain}" style="width:40px; border-radius:8px;">
                 <div style="text-align:right;">
@@ -152,8 +163,8 @@ async function syncNexus() {
                     <div style="font-size:0.75rem; color:var(--muted); font-weight:800;">(${it.rating}/5)</div>
                 </div>
             </div>
-            <div style="font-size:1.4rem; font-weight:800; margin-bottom:2px;">${it.name}</div>
-            <div style="font-size:0.6rem; color:var(--accent); font-weight:900; margin-bottom:10px; text-transform:uppercase;">Version: ${it.version || '1.0.0'}</div>
+            <div style="font-size:1.4rem; font-weight:800;">${it.name}</div>
+            <div style="font-size:0.6rem; color:var(--accent); font-weight:900; margin-bottom:10px;">VERSION: ${it.version || '1.0.0'}</div>
             <div style="font-size:0.9rem; opacity:0.8; flex-grow:1; line-height:1.5;">${it.short_desc}</div>
             <div style="border-top:1px solid var(--border); padding-top:15px; display:flex; justify-content:space-between; font-size:0.75rem; font-weight:bold;">
                 <div>Min. $${it.pricing?.[0]?.price || '0'}</div>
@@ -162,9 +173,6 @@ async function syncNexus() {
         </div>
     `).join("");
 }
-
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeAll() { document.querySelectorAll('.overlay-screen').forEach(o => o.classList.remove('active')); }
 
 setInterval(() => {
     const n = new Date();
